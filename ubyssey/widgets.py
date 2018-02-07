@@ -16,6 +16,7 @@ from ubyssey.zones import (
 )
 from ubyssey.fields import EventField
 
+
 @register.widget
 class EventWidget(Widget):
   id = 'event-widget'
@@ -31,6 +32,7 @@ class EventWidget(Widget):
       if not result.get('event'):
           result['event'] = Event.objects.get_random_event()
       return result
+
 
 @register.widget
 class UpcomingEventsWidget(Widget):
@@ -86,6 +88,7 @@ class WeeklyEventsWidget(Widget):
             .filter(is_published=True)[:5]
         return data
 
+
 @register.widget
 class UpcomingEventsHorizontalWidget(Widget):
     id = 'upcoming-events-horizontal'
@@ -114,6 +117,7 @@ class UpcomingEventsHorizontalWidget(Widget):
 
         return result
 
+
 @register.widget
 class TopStoryDefault(Widget):
     id = 'top-story-default'
@@ -123,6 +127,7 @@ class TopStoryDefault(Widget):
     accepted_keywords = ('articles', )
 
     zones = (ArticleHorizontal,)
+
 
 @register.widget
 class TopStoryLive(Widget):
@@ -136,9 +141,6 @@ class TopStoryLive(Widget):
     summary = CharField('Video Summary')
 
     accepted_keywords = ('articles', )
-
-
-
 
 
 @register.widget
@@ -164,6 +166,7 @@ def in_date_range(start, end):
 
     return True
 
+
 @register.widget
 class FacebookVideoBig(Widget):
     id = 'facebook-video-big'
@@ -183,6 +186,7 @@ class FacebookVideoBig(Widget):
     def context(self, result):
         result['do_show'] = in_date_range(result['start_time'], result['end_time'])
         return result
+
 
 @register.widget
 class AlertBanner(Widget):
