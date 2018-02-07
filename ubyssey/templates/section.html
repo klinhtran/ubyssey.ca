@@ -6,12 +6,28 @@
 {% include 'headers/mobile.html' %}
 {% endblock %}
 {% block content %}
+
+
 <main class="section" data-id="{{ section.id }}" data-type="{{ type }}">
   {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=1 %}
   <div class="u-container u-container--padded">
     <div class="c-page__header">
-      <h1 class="c-page__heading">{{ section.name }}</h1>
+      <h1 class="c-page__heading section-head">{{ section.name }}</h1>
     </div>
+
+    <div class="sub-section">
+
+          <a href="#" class="subber">sub-section1</a> 
+          <a href="#" class="subber">sub-section2</a> 
+          <a href="#" class="subber">sub-section3</a> 
+          <a href="#" class="subber">sub-section4</a> 
+          <a href="#" class="subber">sub-section5</a>
+          <a href="#" class="subber">sub-section6</a>  
+
+
+    </div>
+
+  
 
     <div class="c-section__featured">
       {% include 'objects/articles/featured.html' with article=featured_articles.first %}
@@ -22,7 +38,7 @@
       </div>
     </div>
 
-    <h3 class="c-page__section">Archive</h3>
+
     {% include 'objects/archive.html' %}
 
   </div>

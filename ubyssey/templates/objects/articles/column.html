@@ -2,6 +2,7 @@
   <div class="o-article__meta">
     <div class="o-article__meta__image">
       <a class="o-article__image" href="{{ article.get_absolute_url }}" style="background-image: url('{{ article.featured_image.image.get_medium_url }}');"></a>
+      <h4 class="sub-topic"><a href="#">SUBTOPIC GOES HERE</a></h4>
       <h3 class="o-article__headline">
         <a href="{{ article.get_absolute_url }}">{{ article.headline|safe }}</a>
       </h3>

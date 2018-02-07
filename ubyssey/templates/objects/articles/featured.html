@@ -1,6 +1,6 @@
 <article class="o-article o-article--featured{% if padded %} o-article--padded{% endif %}">
   {% if article.featured_image %}
-  <div class="o-article__left">
+  <div class="o-article__left-featured">
     <a class="o-article__image" href="{{ article.get_absolute_url }}">
       <img src="{{ article.featured_image.image.get_medium_url }}" />
     </a>
@@ -8,6 +8,7 @@
   {% endif %}
   <div class="o-article__right">
     <div class="o-article__meta">
+       <h4 class="sub-topic"><a href="#">SUBTOPIC GOES HERE</a></h4>
       <h3 class="o-article__headline">
         <a href="{{ article.get_absolute_url }}">{{ article.headline|safe }}</a>
       </h3>
