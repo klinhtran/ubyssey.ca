@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    environment:   # Set up mysql database name and password
+      MYSQL_DATABASE: ubyssey
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_USER: test
+      MYSQL_ROOT_PASSWORD: ubysseytest
+      MYSQL_PASSWORD: ubysseytest
+
+  django:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"   # Apply database migrations
+    volumes:
+      - .:/ubyssey.ca
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    container_name: ubyssey-dev
