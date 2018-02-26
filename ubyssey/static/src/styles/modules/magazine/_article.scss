@@ -160,7 +160,6 @@
   > p:first-child:first-letter { background: $color-blue; }
 }
 
-
 .c-article__suggested {
   // Structure
   margin-top: 2rem;
@@ -212,7 +211,6 @@
   width: 100%;
 }
 
-
 .image-attachment > img {
   // Structure
   display: block;
@@ -227,4 +225,21 @@
   text-transform: uppercase;
   font-size: font-size(13);
   color: $color-text-gray;
+}
+
+.c-article--2018 .c-article__body > p:first-child:first-letter {
+  // Structure
+  float: none;
+  margin-top: 0;
+  margin-right: 0;
+  padding-right: 0;
+  padding-left: 0;
+
+  // Background
+  background: transparent;
+
+  // Text
+  font-size: 1em;
+  line-height: 1em;
+  color: inherit;
 }

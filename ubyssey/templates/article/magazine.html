@@ -3,7 +3,7 @@
 {% block content %}
   {% include 'magazine/header.html' with color=article.template_fields.color %}
 
-  <article class="c-article c-article--{{ article.template_fields.color }}">
+  <article class="c-article c-article--{{ article.template_fields.color }}{% for tag in article.tags.all %} c-article--{{ tag.name }}{% endfor %}">
     <div class="u-container u-container--small">
       <h1 class="c-article__headline"><span class="arrow--{{ article.template_fields.color }}"></span>{{ article.headline }}</h1>
       {% if article.template_fields.description %}
