@@ -3,6 +3,7 @@
 # FROM directive instructing base image to build upon
 FROM python:2.7
 ENV PYTHONUNBUFFERED 1
+COPY ubyssey.sql /docker-entrypoint-initdb.d/
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install build-essential curl
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -

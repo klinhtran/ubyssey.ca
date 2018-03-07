@@ -6,13 +6,12 @@ services:
     environment:   # Set up mysql database name and password
       MYSQL_DATABASE: ubyssey
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_USER: test
-      MYSQL_ROOT_PASSWORD: ubysseytest
-      MYSQL_PASSWORD: ubysseytest
+    # volumes:
+    #   - ../ubyssey.sql:/docker-entrypoint-initdb.d/ubyssey.sql
 
   django:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"   # Apply database migrations
+    command: bash -c "python manage.py migrate dispatch && python manage.py runserver 0.0.0.0:8000"   # Apply database migrations
     volumes:
       - .:/ubyssey.ca
     ports:
