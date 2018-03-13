@@ -9,6 +9,7 @@
   // Structure
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+  justify-content: space-around;
 
   @media($bp-larger-than-phablet) {
     // Structure
@@ -77,6 +78,7 @@
   // Structure
   margin-top: 0;
   margin-bottom: 0;
+  text-align: center;
 
   // Text
   font-size: font-size(32);

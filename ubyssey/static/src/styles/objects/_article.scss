@@ -7,7 +7,9 @@
 div.o-article__left-featured{
   flex-basis: 60%;
   img {
-    width: 100%;
+    object-fit: cover;
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -27,6 +29,8 @@ div.o-article__left-featured{
   font-weight: $font-weight-bold;
   line-height: 1.15em;
   font-size: font-size(24);
+
+
 
   a {
     // Text
@@ -98,7 +102,7 @@ div.sub-section {
 }
 @media (max-width: 630px) {
   div.sub-section {
-    width: 60%;
+    width: 100%;
     flex-direction: row;
   }
 
@@ -110,6 +114,12 @@ div.sub-section {
   margin-bottom: 15px;
   text-decoration: none;
   font-weight: 500;
+  text-align: center;
+
+  @media (max-width: 630px) {
+    width: 30%;
+  }
+
  } 
 
 // Default article
@@ -159,6 +169,7 @@ div.sub-section {
 .o-article--list {
   // Structure
   display: flex;
+  flex-direction: column;
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
@@ -171,12 +182,13 @@ div.sub-section {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
+    flex-direction: row;
     justify-content: space-between;
   }
 
   .o-article__headline {
     // Text
-    font-size: font-size(20);
+    font-size: font-size(24);
 
     @media($bp-larger-than-phablet) {
       // Text
@@ -186,7 +198,7 @@ div.sub-section {
 
   .o-article__left {
     // Structure
-    width: 6rem;
+    width: 12rem;
     padding-right: 1rem;
 
     @media($bp-larger-than-mobile) {
@@ -239,6 +251,10 @@ div.sub-section {
     // Structure
     width: 100%;
     margin-bottom: 0.5rem;
+
+    img {
+      margin-top: 50px;
+    }
 
     @media($bp-larger-than-phablet) {
       // Structure
@@ -372,13 +388,14 @@ div.sub-section {
     background-size: cover;
   }
 
-
+@media($bp-larger-than-phablet) {
       &:nth-of-type(2) {
         border-right: 0.2px solid #e5e5e5;
         border-left: 0.2px solid #e5e5e5;
         padding-right: 26px;
         padding-left: 26px;
       }
+    }
 
 
 
@@ -402,7 +419,7 @@ div.sub-section {
     margin-bottom: 0;
 
     // Text
-    font-size: font-size(18);
+    font-size: font-size(24);
     line-height: 1.2em;
   }
 
