@@ -29,6 +29,7 @@
         {% include 'objects/social-icons.html' with article=article layout='top' %}
       </div>
     </div>
+
   {% endblock %}
     <div class="u-container clearfix {% if article.template_fields.header_layout %}{{ article.template }}{% endif %}">
       {% block right-column %}
