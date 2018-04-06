@@ -1,0 +1,23 @@
+version: "2.1"
+services:
+  db:
+    build: mysql/
+    environment:
+      MYSQL_DATABASE: ubyssey
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  django:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/ubyssey.ca
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    container_name: ubyssey-dev
