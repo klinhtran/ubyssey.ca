@@ -25,7 +25,7 @@ DATABASES = {
         'NAME': 'ubyssey',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '3306',
     },
 }

@@ -18,4 +18,5 @@ RUN npm install
 RUN npm install -g gulp
 RUN npm rebuild node-sass
 RUN gulp build-dev
+CMD ["gulp"]
 WORKDIR ./../../
