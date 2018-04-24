@@ -5,19 +5,22 @@ services:
     environment:
       MYSQL_DATABASE: ubyssey
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
+
+  gulp:
+    build: .
+    command: bash -c "cd ubyssey/static && npm install && gulp"
+    volumes:
+      - .:/ubyssey.ca
 
   django:
     build: .
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/ubyssey.ca
+    volumes_from:
+      - gulp
     ports:
       - "8000:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     container_name: ubyssey-dev
