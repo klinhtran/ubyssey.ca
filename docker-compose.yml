@@ -5,10 +5,20 @@ services:
     environment:
       MYSQL_DATABASE: ubyssey
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   gulp:
     build: .
     command: bash -c "cd ubyssey/static && npm install && gulp"
+    volumes:
+      - .:/ubyssey.ca
+
+  yarn:
+    build: .
+    command: bash -c "cd ../dispatch/dispatch/static/manager && yarn start"
     volumes:
       - .:/ubyssey.ca
 
@@ -19,8 +29,10 @@ services:
       - .:/ubyssey.ca
     volumes_from:
       - gulp
+      - yarn
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     container_name: ubyssey-dev
