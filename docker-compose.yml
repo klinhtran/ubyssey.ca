@@ -1,5 +1,7 @@
 version: "2.1"
 services:
+
+## Starts up mySQL server for ubyssey.ca and Dispatch
   db:
     build: mysql/
     environment:
@@ -10,18 +12,21 @@ services:
       timeout: 20s
       retries: 10
 
+## Starts up static file watcher for ubyssey.ca
   gulp:
     build: .
     command: bash -c "cd ubyssey/static && npm install && gulp"
     volumes:
       - .:/ubyssey.ca
 
+## Starts up static file watcher for Dispatch platform
   yarn:
     build: .
     command: bash -c "cd ../dispatch/dispatch/static/manager && yarn start"
     volumes:
-      - .:/ubyssey.ca
+      - /dispatch
 
+## Starts up Django server for ubyssey.ca and Dispatch
   django:
     build: .
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"

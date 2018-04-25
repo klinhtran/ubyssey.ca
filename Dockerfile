@@ -1,6 +1,6 @@
 # Dockerfile
-
 # FROM directive instructing base image to build upon
+# This docker image runs on Debian Jessie, a popular linux distro
 FROM python:2.7
 ENV PYTHONUNBUFFERED 1
 RUN export DEBIAN_FRONTEND=noninteractive
