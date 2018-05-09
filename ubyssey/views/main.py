@@ -8,7 +8,7 @@ from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from dispatch.models import Article, Section, Topic, Person
