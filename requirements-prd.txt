@@ -1,8 +1,8 @@
-dispatch==0.4.2
+dispatch==0.4.4
 git+git://github.com/ubyssey/django-google-storage.git
 django-gae-backends
 django-canonical-domain
-mysql-python
+mysqlclient
 django-phonenumber-field
 beautifulsoup4
 feedparser
