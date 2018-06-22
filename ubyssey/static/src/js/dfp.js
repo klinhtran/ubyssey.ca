@@ -2,6 +2,7 @@ const SIZES = {
     'box': [300, 250], 
     'skyscraper' : [[300, 250], [300, 600]],
     'banner': [468, 60],
+    'billboard': [970, 250],
     'leaderboard': [[728, 90], [970, 90]],
     'mobile-leaderboard': [300, 50]
 };

@@ -47,7 +47,7 @@ class ArticleHelper(object):
                 paragraph_count += 1
         
         numberOfAds = 1
-        paragraphs_per_ad = 6
+        paragraphs_per_ad = 5
 
         while paragraph_count / numberOfAds > paragraphs_per_ad :
             numberOfAds += 1

@@ -51,11 +51,11 @@
         {% endif %}
           {% zone 'article-sidebar' %}
           {% if explicit is not True %}
-            {% if reading_time >= 3 %}
+            {% if reading_time == 2 %}
+              {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+            {% elif reading_time >= 3 %}
               {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
               {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
-            {% else %}
-              {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
             {% endif %}
           {% endif %}
         </div>
@@ -89,6 +89,13 @@
 <div id="gallery"></div>
 
 {% include 'objects/bottom-banner.html' with article=article %}
+{% if article_type == 'desktop' %}
+  {% include 'objects/advertisement.html' with size='billboard' name='Billboard' id=7 article=article.id %}
+{% elif article_type == 'tablet' %}
+  {% include 'objects/advertisement.html' with size='leaderboard' name='Leaderboard' id=7 article=article.id %}
+{% else %}
+  {% include 'objects/advertisement.html' with size='box' name='Box_D' id=7 article=article.id %}
+{% endif %}
 
 {% endblock %}
 
