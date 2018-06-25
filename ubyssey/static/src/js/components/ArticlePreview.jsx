@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
+import DispatchAPI from '../api/dispatch'
 
 class ArticlePreview extends Component{
+
+  goToArticle() {
+    DispatchAPI.articles.suggested(this.props.articleId, this.props.currentArticleId)
+
+    window.location = this.props.url
+  }
+
   render() {
     const msec = Date.parse(this.props.publishTime)
     const publishedDate = new Date(msec)
     return (
-      <a
-        href={this.props.url}
+      <div
+        onClick={() => {this.goToArticle()}}
         id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>
           <div className='sa-content'>
@@ -26,7 +34,7 @@ class ArticlePreview extends Component{
             <span className='sa-date'>{publishedDate.toDateString().slice(4)}</span>
             <span className='sa-author'><em>{this.props.authors[0]}</em></span>
           </div>
-      </a>
+      </div>
     )
   }
 }

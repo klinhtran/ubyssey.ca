@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react'
-import LinkedList from '../modules/LinkedList'
 import ArticlePreview from './ArticlePreview.jsx'
 import DispatchAPI from '../api/dispatch'
 
@@ -11,13 +10,8 @@ class ArticlesSuggested extends Component{
     var articles = props.articles
     articles.unshift(props.currentArticle.id)
 
-    this.articlesTable = {};
-    this.articlesTable[this.props.currentArticle.id] = 0;
-
     this.state = {
-      active: new LinkedList(articles),
       articles: [props.currentArticle],
-      loading: false
     }
   }
 
@@ -41,6 +35,7 @@ class ArticlesSuggested extends Component{
       if (index !== 0 && article.headline !== this.props.currentArticle.headline) {
         return (
           <ArticlePreview 
+            currentArticleId={this.props.currentArticle.id}
             articleId={article.id}
             headline={article.headline}
             url={article.url}

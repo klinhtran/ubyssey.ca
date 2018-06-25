@@ -74,6 +74,9 @@ const DispatchAPI = {
     },
     search: (query) => {
       return getRequest('articles', null, query)
+    },
+    suggested: (id, payload) => {
+      return postRequest('articles.suggested', id, payload)
     }
   }
 }
