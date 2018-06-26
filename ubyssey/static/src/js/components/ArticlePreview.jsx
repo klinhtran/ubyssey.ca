@@ -4,7 +4,10 @@ import DispatchAPI from '../api/dispatch'
 class ArticlePreview extends Component{
 
   goToArticle() {
-    DispatchAPI.articles.suggested(this.props.articleId, this.props.currentArticleId)
+    const payload = {
+      'article_id' : this.props.currentArticleId
+    }
+    DispatchAPI.articles.suggested(this.props.articleId, payload)
 
     window.location = this.props.url
   }
@@ -18,12 +21,12 @@ class ArticlePreview extends Component{
         id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>
           <div className='sa-content'>
-            {this.props.featuredImageUrl && 
+            {this.props.featuredImageUrl &&
               <div
                 className='sa-thumbnail-image'
                 style={{backgroundImage: 'url(' + this.props.featuredImageUrl + ')'}}></div>
             }
-            {!this.props.featuredImageUrl && 
+            {!this.props.featuredImageUrl &&
               <div className='sa-thumbnail-image'>
                 No image
               </div>
