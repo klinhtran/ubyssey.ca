@@ -84,7 +84,6 @@ class UbysseyTheme(object):
         except:
             raise Http404('Article could not be found.')
 
-        ArticleHelper.get_suggested_articles(article.parent_id)
         article.add_view()
 
         # determine if user is viewing from mobile
@@ -101,11 +100,13 @@ class UbysseyTheme(object):
 
         popular = ArticleHelper.get_popular()[:5]
 
+        suggested_articles = ArticleHelper.get_suggested_articles(article, ref, dur)
+        print(suggested_articles)
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
             'article': article,
-            'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
+            'reading_list': suggested_articles,
             'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
             'popular': popular,

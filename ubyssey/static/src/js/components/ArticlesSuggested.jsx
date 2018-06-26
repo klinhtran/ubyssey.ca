@@ -11,7 +11,7 @@ class ArticlesSuggested extends Component{
     articles.unshift(props.currentArticle.id)
 
     this.state = {
-      articles: [props.currentArticle],
+      articles: [],
     }
   }
 
@@ -32,7 +32,7 @@ class ArticlesSuggested extends Component{
   render() {
     const articles = this.state.articles.map((article, index) => {
       // only show 3 suggested articles
-      if (index !== 0 && article.headline !== this.props.currentArticle.headline) {
+      if (String(article.headline) !== String(this.props.currentArticle.headline)) {
         return (
           <ArticlePreview 
             currentArticleId={this.props.currentArticle.id}

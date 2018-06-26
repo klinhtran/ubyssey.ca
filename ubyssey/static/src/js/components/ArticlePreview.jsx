@@ -5,9 +5,9 @@ class ArticlePreview extends Component{
 
   goToArticle() {
     const payload = {
-      'article_id' : this.props.currentArticleId
+      'article_id' : this.props.articleId
     }
-    DispatchAPI.articles.suggested(this.props.articleId, payload)
+    DispatchAPI.articles.suggested(this.props.currentArticleId, payload)
 
     window.location = this.props.url
   }

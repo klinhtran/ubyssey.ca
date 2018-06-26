@@ -32,15 +32,6 @@ class ArticleHelper(object):
         return reading_time
 
     @staticmethod
-    def get_suggested_articles(article_id):
-        print('article_id', article_id)
-        print('all relations: ', ArticleRelation.objects.all().values_list('parent__id', 'article__id','count'))
-        article_ids = ArticleRelation.objects.filter(parent__id=article_id).order_by('-count').values_list('count','article__id')[:5]
-        print('article_ids', article_ids)
-
-        return 0
-
-    @staticmethod
     def insert_ads(content, article_type='desktop'):
         """ Inject upto 5 ads evenly throughout the article content.
             Ads cannot inject directly beneath headers. """
@@ -181,34 +172,23 @@ class ArticleHelper(object):
             'ids': ",".join([str(a.parent_id) for a in articles]),
             'name': name
         }
-
+    
     @staticmethod
-    def get_years():
-        publish_dates = Article.objects.filter(is_published=True).dates('published_at','year',order='DESC')
-        years = []
+    def get_suggested_articles(article, ref, dur):
+        article_ids = ArticleRelation.objects.filter(parent__id=article.parent_id).exclude(parent__id=article.id -1).order_by('-count').values_list('article__id', 'count')[:5]
+        
+        print(article.id)
+        print(article_ids)
 
-        for publish_date in publish_dates:
-            years.append(publish_date.year)
+        if article_ids.count() < 3:
+            print('get reading list')
+            return ArticleHelper.get_reading_list(article, ref, dur)
 
-        return years
-
-    @staticmethod
-    def get_topic(topic_name):
-
-        return Article.objects.filter(
-            is_published=True,
-            topic__name=topic_name
-        )
-
-    @staticmethod
-    def is_explicit(article):
-        explicit_tags = ['sex', 'explicit']
-        tags = article.tags.all().values_list('name', flat=True)
-        for tag in tags:
-            if tag.lower() in explicit_tags:
-                return True
-        return False
-
+        return {
+            'ids': ",".join([str(a[0]) for a in article_ids]), 
+            'counts': ','.join([str(a[1]) for a in article_ids])
+        }
+    
     @staticmethod
     def get_random_articles(n, section, exclude=None):
         """Returns `n` random articles from the given section."""
@@ -255,7 +235,6 @@ class ArticleHelper(object):
         }
 
         articles = Article.objects.filter(is_published=True)
-
         if dur in durations:
             end = datetime.datetime.now() + datetime.timedelta(days=1)
             start = end - datetime.timedelta(days=durations[dur])
@@ -285,6 +264,33 @@ class ArticleHelper(object):
             trending_article = choice(trending_articles)
 
         return trending_article
+
+    @staticmethod
+    def get_years():
+        publish_dates = Article.objects.filter(is_published=True).dates('published_at','year',order='DESC')
+        years = []
+
+        for publish_date in publish_dates:
+            years.append(publish_date.year)
+
+        return years
+
+    @staticmethod
+    def get_topic(topic_name):
+
+        return Article.objects.filter(
+            is_published=True,
+            topic__name=topic_name
+        )
+
+    @staticmethod
+    def is_explicit(article):
+        explicit_tags = ['sex', 'explicit']
+        tags = article.tags.all().values_list('name', flat=True)
+        for tag in tags:
+            if tag.lower() in explicit_tags:
+                return True
+        return False
 
     @staticmethod
     def get_meta(article, default_image=None):
