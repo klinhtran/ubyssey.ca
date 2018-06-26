@@ -84,6 +84,7 @@ class UbysseyTheme(object):
         except:
             raise Http404('Article could not be found.')
 
+        ArticleHelper.get_suggested_articles(article.parent_id)
         article.add_view()
 
         # determine if user is viewing from mobile

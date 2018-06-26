@@ -6,7 +6,7 @@ from django.http import Http404
 from django.db import connection
 from django.db.models.aggregates import Count
 
-from dispatch.models import Article, Page, Section
+from dispatch.models import Article, ArticleRelation, Page, Section
 
 from ubyssey.events.models import Event
 
@@ -32,6 +32,15 @@ class ArticleHelper(object):
         return reading_time
 
     @staticmethod
+    def get_suggested_articles(article_id):
+        print('article_id', article_id)
+        print('all relations: ', ArticleRelation.objects.all().values_list('parent__id', 'article__id','count'))
+        article_ids = ArticleRelation.objects.filter(parent__id=article_id).order_by('-count').values_list('count','article__id')[:5]
+        print('article_ids', article_ids)
+
+        return 0
+
+    @staticmethod
     def insert_ads(content, article_type='desktop'):
         """ Inject upto 5 ads evenly throughout the article content.
             Ads cannot inject directly beneath headers. """
@@ -41,10 +50,10 @@ class ArticleHelper(object):
         }
 
         paragraph_count = 1
-        
+
         for block in content:
             paragraph_count = len(filter(lambda b: b['type'] == 'paragraph', content))
-        
+
         number_of_ads = 1
         paragraphs_per_ad = 6
 
@@ -72,7 +81,7 @@ class ArticleHelper(object):
 
         content = ad_placements
         return content
-        
+
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
 
