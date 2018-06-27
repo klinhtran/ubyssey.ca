@@ -11,6 +11,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
+from django_user_agents.utils import get_user_agent
+
 from dispatch.models import Article, Section, Topic, Person
 
 import ubyssey
@@ -101,7 +103,16 @@ class UbysseyTheme(object):
 
         template = article.get_template_path()
         t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
-        return HttpResponse(t.render(context))
+        # return HttpResponse(t.render(context))
+
+        # If user_agent is not PC, show the mobile app?
+        user_agent = get_user_agent(request)
+        if user_agent.is_pc:
+            print(user_agent)
+            return HttpResponse(t.render(context))
+        else:
+            print(user_agent)
+            return render(request, 'index.html', context)
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
