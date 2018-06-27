@@ -12,6 +12,14 @@ class ArticlePreview extends Component{
     window.location = this.props.url
   }
 
+  renderWithFeature() {
+    return <div className='sa-thumbnail-image' style={{backgroundImage: 'url(' + this.props.featuredImageUrl + ')'}}/>
+  }
+
+  renderNoFeature() {
+    return <div className='sa-thumbnail-image'>No image</div>
+  }
+
   render() {
     const msec = Date.parse(this.props.publishTime)
     const publishedDate = new Date(msec)
@@ -21,16 +29,7 @@ class ArticlePreview extends Component{
         id={'suggested-article-' + String(this.props.articleId)}
         className='article-preview'>
           <div className='sa-content'>
-            {this.props.featuredImageUrl &&
-              <div
-                className='sa-thumbnail-image'
-                style={{backgroundImage: 'url(' + this.props.featuredImageUrl + ')'}}></div>
-            }
-            {!this.props.featuredImageUrl &&
-              <div className='sa-thumbnail-image'>
-                No image
-              </div>
-            }
+            {this.props.featuredImageUrl ? this.renderWithFeature() : this.renderNoFeature()}
             <h3>{this.props.headline}</h3>
           </div>
           <div className='sa-subtitle'>

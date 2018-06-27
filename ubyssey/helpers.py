@@ -154,35 +154,18 @@ class ArticleHelper(object):
                 }
 
         return results
-
-    @staticmethod
-    def get_reading_list(article, ref=None, dur=None):
-        if ref is not None:
-            if ref == 'frontpage':
-                articles = ArticleHelper.get_frontpage(exclude=[article.parent_id])
-                name = 'Top Stories'
-            elif ref == 'popular':
-                articles = ArticleHelper.get_popular(dur=dur).exclude(pk=article.id)[:5]
-                name = "Most popular this week"
-        else:
-            articles = article.get_related()
-            name = article.section.name
-
-        return {
-            'ids': ",".join([str(a.parent_id) for a in articles]),
-            'name': name
-        }
     
     @staticmethod
     def get_suggested_articles(article, ref, dur):
-        article_ids = ArticleRelation.objects.filter(parent__id=article.parent_id).exclude(parent__id=article.id -1).order_by('-count').values_list('article__id', 'count')[:5]
+        article_ids = ArticleRelation.objects.filter(parent__id=article.parent_id).order_by('-count').values_list('article__id', 'count')[:6]
         
-        print(article.id)
-        print(article_ids)
-
-        if article_ids.count() < 3:
-            print('get reading list')
-            return ArticleHelper.get_reading_list(article, ref, dur)
+        if article_ids.count() < 4:
+            articles = article.get_related(6)
+            name = article.section.name
+            return {
+                'ids': ",".join([str(a.parent_id) for a in articles]),
+                'name': name
+            }
 
         return {
             'ids': ",".join([str(a[0]) for a in article_ids]), 

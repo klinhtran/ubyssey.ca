@@ -1,6 +1,6 @@
 @import '../modules/variables';
 
-.sa-container-outer {
+.bottom-banner-container {
   // Structure
   padding-left: 0;
   padding-right: 0;
@@ -9,6 +9,7 @@
   .u-container {
     // Strucuture
     max-width: 585px;
+    margin: 0 auto;
   }
 
   h1 {
@@ -71,7 +72,9 @@
 
     .sa-thumbnail-image {
       // Strucuture
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-right: 15px;
       width: 60px;
       height: 40px;
@@ -80,6 +83,7 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-size: contain;
+      background-color: #DADADA;
 
       // Text
       color: $color-text-gray-light;
@@ -88,7 +92,8 @@
     }
   }
 }
-.sa-container-outer {
+
+.bottom-banner-container {
   @media($bp-larger-than-tablet) {
     .u-container {
       // Strucuture
@@ -118,12 +123,12 @@
 
       .sa-thumbnail-image {
         // Strucuture
-        width: 240px;
+        width: 100%;
         height: 160px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         margin: 0 auto;
+        
+        // Background
+        background-color: transparent;
 
         // Text
         font-size: 1rem;

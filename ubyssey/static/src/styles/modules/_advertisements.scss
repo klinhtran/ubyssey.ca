@@ -61,7 +61,7 @@ $adslots: (
   }
 }
 
-#article-list {
+#article-list-suggested {
   .o-advertisement--leaderboard {
     @media( min-width: 1010px ){
       $width: nth(map-get($adslots, billboard), 1);

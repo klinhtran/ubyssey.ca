@@ -146,7 +146,7 @@ if ($('main.article').length) {
 
     var articleList = React.render(
         <ArticlesSuggested breakpoint={960} name={listName} currentArticle={firstArticle} articles={articleIds} userId={userId} />,
-        document.getElementById('article-list')
+        document.getElementById('article-list-suggested')
     );
 }
 

@@ -98,10 +98,10 @@ class UbysseyTheme(object):
         if not ArticleHelper.is_explicit(article):
             article.content = ArticleHelper.insert_ads(article.content, article_type)
 
-        popular = ArticleHelper.get_popular()[:5]
+        popular = ArticleHelper.get_popular()[:8]
 
         suggested_articles = ArticleHelper.get_suggested_articles(article, ref, dur)
-        print(suggested_articles)
+
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),

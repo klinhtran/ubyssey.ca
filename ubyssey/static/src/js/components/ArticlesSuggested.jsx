@@ -6,9 +6,7 @@ import DispatchAPI from '../api/dispatch'
 class ArticlesSuggested extends Component{
   constructor(props) {
     super(props)
-
-    var articles = props.articles
-    articles.unshift(props.currentArticle.id)
+    let articles = props.articles
 
     this.state = {
       articles: [],
@@ -31,32 +29,33 @@ class ArticlesSuggested extends Component{
 
   render() {
     const articles = this.state.articles.map((article, index) => {
-      // only show 3 suggested articles
-      if (String(article.headline) !== String(this.props.currentArticle.headline)) {
-        return (
-          <ArticlePreview 
-            currentArticleId={this.props.currentArticle.id}
-            articleId={article.id}
-            headline={article.headline}
-            url={article.url}
-            authors={article.authors}
-            publishTime={article.published_at}
-            featuredImageUrl={article.featured_image}
-            key={index} />
-        )
-      }
-    });
+
+      return (
+        <ArticlePreview 
+          currentArticleId={this.props.currentArticle.id}
+          articleId={article.id}
+          headline={article.headline}
+          url={article.url}
+          authors={article.authors}
+          publishTime={article.published_at}
+          featuredImageUrl={article.featured_image}
+          key={index} />
+      )
+    })
 
     return (
-      <div className='sa-container-outer'>
-        <div className='u-container'>
-          <h2 className='block-title'>Suggested Articles</h2>
+      <div>
+        <h2 className='block-title'>Suggested Articles</h2>
+        <div className='article-list u-container'>
           <div className={'sa-container-inner'}>
             {articles.filter((article) => {if (article) {return article}}).slice(0, 3)}
           </div>
+          {articles.length > 3 && <div className={'sa-container-inner'}>
+            {articles.filter((article) => {if (article) {return article}}).slice(3, 6)}
+          </div> }
         </div>
       </div>
-    );
+    )
   }
 }
 
