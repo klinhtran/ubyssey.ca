@@ -29,6 +29,7 @@
   <meta property="fb:pages" content="99164676792" />
   <link rel="stylesheet" href="{% add_version 'css/main.css' %}" type="text/css"/>
 
+  {% if explicit is not True%}
   <script>
     var googletag = googletag || {};
     googletag.cmd = googletag.cmd || [];
@@ -43,6 +44,7 @@
     node.parentNode.insertBefore(gads, node);
     })();
   </script>
+  {% endif %}
 </head>
 <body>
 <script>
