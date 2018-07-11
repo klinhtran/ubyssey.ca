@@ -6,15 +6,20 @@ BASE_URL = 'http://localhost:8000/'
 
 SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
 
-VERSION = '1.4.9'
+VERSION = '1.4.16'
 
 ALLOWED_HOSTS = ['localhost', '*']
 
-INSTALLED_APPS += ['ubyssey.events',]
+INSTALLED_APPS += ['ubyssey.events', 'django_user_agents',]
 
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 ROOT_URLCONF = 'ubyssey.urls'
+
+MIDDLEWARE_CLASSES = (
+    # other middlewares...
+    'django_user_agents.middleware.UserAgentMiddleware',
+)
 
 DEBUG = True
 USE_TZ = True
@@ -26,7 +31,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ubyssey',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     },
@@ -38,12 +43,22 @@ TEMPLATES += [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
-        ]
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+            ],
+        },
     }
 ]
 
+REACT_APP_DIR = os.path.join(os.path.dirname(__file__), '../../mobile')
+
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
+    # os.path.join(os.path.dirname(__file__), '../../mobile/public'),
+    # os.path.join(os.path.dirname(__file__), '../../mobile/src'),
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
 )
 
 STATIC_URL = '/static/'

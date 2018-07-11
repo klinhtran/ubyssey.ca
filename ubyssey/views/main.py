@@ -18,6 +18,11 @@ from dispatch.models import Article, Section, Topic, Person
 import ubyssey
 from ubyssey.helpers import ArticleHelper, PageHelper
 
+from react.render import render_component
+
+import os
+import logging
+
 def parse_int_or_none(maybe_int):
     try:
         return int(maybe_int)
@@ -112,7 +117,22 @@ class UbysseyTheme(object):
             return HttpResponse(t.render(context))
         else:
             print(user_agent)
-            return render(request, 'index.html', context)
+            # rendered = render_component('App.js')
+            # print(rendered)
+            # return render(request, 'index.html', context)
+            try:
+                with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                    return HttpResponse(f.read())
+            except IOError:
+                logging.exception('Production build of app not found')
+                return HttpResponse(
+                    """
+                    This URL is only used when you have built the production
+                    version of the app. Visit http://localhost:3000/ instead, or
+                    run `yarn run build` to test the production version.
+                    """,
+                    status=501,
+                )
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
