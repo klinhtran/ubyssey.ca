@@ -122,7 +122,7 @@ class Timeline extends Component {
     const mobileStyle = {
       width: winWidth, 
       overflow: this.state.mobileShow ? 'scroll': 'visible',
-      marginTop: (this.state.isMobile ? (this.state.mobileShow ? 0 : winHeight-54-54) : -54),
+      marginTop: (this.state.isMobile ? (this.state.mobileShow ? 0 : winHeight-54-54) : -80),
       height: this.state.isMobile ? window.innerHeight - 54 : 80
     }
 
