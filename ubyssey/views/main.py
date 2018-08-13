@@ -268,7 +268,7 @@ class UbysseyTheme(object):
             'type': 'section',
             'featured_articles': {
                 'first': featured_articles[0],
-                'rest': featured_articles[1:4]
+                'rest': featured_articles[1:5]
             },
             'articles': articles,
             'order': order,
