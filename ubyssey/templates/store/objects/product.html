@@ -1,0 +1,9 @@
+<product class='o-product'>
+  <div class='o-article__image__container'>
+    <a class='o-article__image' href='{{ product.get_absolute_url }}' style="background-image:url('{{ product.image.image.get_medium_url }}');"></a>
+    <h3 class="o-product__info">
+      <a href='{{ product.get_absolute_url }}'>{{ product.name }}</a>
+      <p>{{ product.price }}</p>
+    </h3>
+  </div>
+</product>

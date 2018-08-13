@@ -1,0 +1,7 @@
+{% load staticfiles %}
+
+<div id='catalogue' class='c-catalogue-container'>
+  {% for product in products %}
+    {% include 'store/objects/product.html' with product=product %}
+  {% endfor %}
+</div>
