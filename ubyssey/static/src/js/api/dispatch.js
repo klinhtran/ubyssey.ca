@@ -95,6 +95,11 @@ const DispatchAPI = {
     updateSubscription: (uuid, subscription) => {
       return patchRequest('notifications.subscribe', uuid, subscription)
     }
+  },
+  store: {
+    get: () => {
+      return getRequest('store', null, null)
+    },
   }
 }
 

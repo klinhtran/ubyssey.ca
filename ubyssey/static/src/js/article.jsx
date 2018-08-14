@@ -10,19 +10,9 @@ import CookieDisclaimer from './components/CookieDisclaimer.jsx'
 
 window.articleHeader = false;
 
-const BOX_HEIGHT = 274
 const SKYSCRAPER_HEIGHT = 624
 
 $(function () {
-    $('.c-widget-poll').each(function () {
-        React.render(
-            <Poll id={$(this).data('id')} loaderHTML={$(this).html()} />,
-            $(this).get(0)
-        )
-    })
-});
-
-$(document).ready(function() {
     $('#adblock-splash').each(function() {
         React.render(
             <AdblockSplash />,
@@ -35,16 +25,20 @@ $(document).ready(function() {
             $(this).get(0)
         )
     })
-});
-
-$(document).ready(function() {
     $('.c-timeline').each(function() {
         React.render(
             <Timeline id={$(this).data('currentArticleId')} title={$(this).data('timelineTitle')} nodes={$(this).data('nodes')} />,
             $(this).get(0)
         )
     })
+    $('.c-widget-poll').each(function () {
+        React.render(
+            <Poll id={$(this).data('id')} loaderHTML={$(this).html()} />,
+            $(this).get(0)
+        )
+    })
 });
+
 
 if ($('main.article').length) {
 

@@ -35,7 +35,8 @@ class StoreTheme(object):
             'meta': {
                 'title': 'The Ubyssey Store',
                 'url': reverse('store-frontpage')
-            }
+            },
+            'product': product
         }
 
         return render(request, 'store/product.html', context)

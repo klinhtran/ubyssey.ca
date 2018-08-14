@@ -6,6 +6,8 @@ module.exports = {
         main:             './src/js/main.js',
         dfp:              './src/js/dfp.js',
         article:          './src/js/article.jsx',
+        store:            './src/js/store.jsx',
+        simpleCart:       './src/js/simpleCart.js',
         vendors:          './src/js/vendors.js',
         a:                './src/js/advertise.js',
         a_new:            './src/js/advertise_new.js',
