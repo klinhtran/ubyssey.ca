@@ -3,7 +3,7 @@ from django.template import loader
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
-#from dispatch.models import Product
+from dispatch.models import Product
 
 class StoreTheme(object):
     """Views for the Ubyssey Store Ecommerce site"""
@@ -12,14 +12,14 @@ class StoreTheme(object):
     def frontpage(self, request):
         """Frontpage View"""
 
-        #TODO: get products
-        # products = Products.objects.all()
+        products = Product.objects.all()
 
         context = {
             'meta': {
                 'title': 'The Ubyssey Store',
                 'url': reverse('store-frontpage')
-            }
+            },
+            'products': products
         }
 
         return render(request, 'store/frontpage.html', context)
