@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {% block content %}
 <product class='o-product'>
-    <a class='o-product__image' href='{{ product.id }}' style="background-image:url('{{ product.get_absolute_image_url }}');"></a>
+    <a class='o-product__image' href='{{ product.id }}/' style="background-image:url('{{ product.get_absolute_image_url }}');"></a>
     <h3 class="o-product__info">
       <a href='{{ product.id }}'>{{ product.name }}</a>
       <p>{{ product.price }}</p>
