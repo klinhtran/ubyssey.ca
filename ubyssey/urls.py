@@ -12,6 +12,7 @@ from ubyssey.views.main import UbysseyTheme
 from ubyssey.views.guide import GuideTheme
 from ubyssey.views.magazine import MagazineTheme
 from ubyssey.views.advertise import AdvertiseTheme
+from ubyssey.views.store import StoreTheme
 
 from ubyssey.zones import *
 from ubyssey.widgets import *
@@ -26,6 +27,7 @@ theme = UbysseyTheme()
 guide = GuideTheme()
 magazine = MagazineTheme()
 advertise = AdvertiseTheme()
+store = StoreTheme()
 
 urlpatterns = [
     url(r'^admin', include(admin_urls)),
@@ -58,6 +60,10 @@ urlpatterns = [
 
     # Centennial
     url(r'^100/$', theme.centennial, name='centennial-landing'),
+
+    # Store
+    url(r'^store/$', store.frontpage, name='store-frontpage'),
+    url(r'^store/(?P<pk>[0-9]+)/$', store.product, name='store-product'),
 
     # Beta-features
     # url(r'^beta/notifications/$', theme.notification, name='notification-beta'),

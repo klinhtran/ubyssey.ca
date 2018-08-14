@@ -1,0 +1,6 @@
+{% extends 'store/base.html' %}
+<div 'c-product'>
+  <h2>{{ product.name }}</h2>
+  <img src='{{ product.image.get_absolute_url }}' />
+  <!-- TODO: Buttons for buy, add price -->
+</div>
