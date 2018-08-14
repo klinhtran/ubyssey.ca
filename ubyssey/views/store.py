@@ -26,10 +26,10 @@ class StoreTheme(object):
 
     def product(self, request, pk=None):
         """Individual Product View"""
-        # try:
-        #     product = Product.objects.get(id=pk)
-        # except:
-        #     raise Http404('Product does not exist')
+        try:
+            product = Product.objects.get(id=pk)
+        except:
+            raise Http404('Product does not exist')
 
         context = {
             'meta': {
