@@ -8,7 +8,7 @@ const getAbsoluteURL = (imageURL) => {
 }
 
 const renderProduct = (product, index) => {
-  const productStyle = {
+  const productImage = {
     backgroundImage: 'url(' + getAbsoluteURL(product.image_url) + ')',
   }
   return (
@@ -17,9 +17,8 @@ const renderProduct = (product, index) => {
       key={index}
       className='c-product__catalogue-wrapper'>
       <div className='c-product__catalogue-container'>
-        <div 
-          className='c-product__catalogue-content' 
-          style={productStyle}>
+        <div className='c-product__catalogue-image' style={productImage}/>
+        <div className='c-product__catalogue-content' >
           <span>{product.title}</span>
           <span>{product.price}</span>
         </div>
@@ -31,7 +30,7 @@ const renderProduct = (product, index) => {
 
 const Catalogue = (props) => {
   return (
-    <div className='c-store-wrapper'>
+    <div className='c-catalogue-wrapper'>
       { props.products &&
         props.products.map((data, index) => {
           return renderProduct(data, index)

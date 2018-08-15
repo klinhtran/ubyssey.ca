@@ -10,7 +10,7 @@ class Cart extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className='c-cart-wrapper'>
         <Link 
           to={'/product/' + String(this.props.lastProduct)}
           className='c-button c-button--small'>

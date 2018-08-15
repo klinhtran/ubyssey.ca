@@ -35,7 +35,7 @@ class Store extends React.Component {
   render(){
     const products = this.state.products ? this.state.products : this.fetchProductData()
     return (
-      <div>
+      <div className='c-store-wrapper'>
         { products && 
           <Switch>
             <Route exact path='/' render={(props) => ( <Catalogue {...props} products={products} /> )} />
