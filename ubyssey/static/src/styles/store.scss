@@ -59,24 +59,32 @@
   height: 100%;
   overflow-y: auto;
 
+
   .c-store-wrapper {
     max-width: 960px;
     width: 100%;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
 
-    .c-product__catalogue-container {
+    .c-product__catalogue-wrapper {
       width: 33.3%;
-      padding-top: 100%;
-      position: relative;
-
-      .c-product__catalogue-sold-out {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(255, 255, 255, .6);
+      cursor: pointer;
+      .c-product__catalogue-container {
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+  
+        .c-product__catalogue-sold-out {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(255, 255, 255, .6);
+        }
       }
     }
+
   }
 }
