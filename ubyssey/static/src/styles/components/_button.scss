@@ -56,3 +56,16 @@
   // Text
   font-size: font-size(14);
 }
+
+.c-button-outline {
+  @extend .c-button;
+
+  background-color: transparent;
+  color: black;
+  border: 2px solid black;
+
+  &:hover {
+    background-color: #000000;
+    opacity: .1;
+  }
+}

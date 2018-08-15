@@ -1,9 +1,13 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter } from 'react-router-dom'
 import { Store } from './components/Store';
+import { Catalogue, Product, Cart } from './components/Store'
 
 $(function () {
-    React.render(
-        <Store />,
-        document.getElementById('ubyssey-store')
-    )
+    ReactDOM.render((
+        <HashRouter>
+            <Store />
+        </HashRouter>
+    ),document.getElementById('ubyssey-store'))
 });

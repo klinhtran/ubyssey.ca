@@ -1,119 +1,48 @@
 import React from 'react'
 import DispatchAPI from '../../api/dispatch'
 
+import { Switch, Route } from 'react-router-dom'
+import { Catalogue, Product, Cart} from './'
+
 class Store extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      selected: null,
-      products: [],
-      catalogueView: true,
-      showCart: false
+      products: null
     }
   }
+
   componentDidMount() {
+    this.fetchProductData()
+  }
+
+  fetchProductData() {
+    simpleCart.init()
+
     DispatchAPI.store.get(this.props.id)
     .then ((response)=> {
       this.setState({
         products: response.results
       })
     })
-
-    // simpleCart.bind( 'ready' , function(){
-    //   console.log( "simpleCart total: " + simpleCart.toCurrency( simpleCart.total() ) ); 
-    // });
-    console.log(simpleCart)
   }
 
-  getAbsoluteURL(imageURL) {
-    let URL = window.location.origin
-    return URL.concat(imageURL)
+  componentDidUpdate() {
+    console.log('update')
+    simpleCart.update()
   }
 
-  toggleView(index) {
-    this.setState(prevState => ({
-      catalogueView: !prevState.catalogueView,
-      selected: index
-    }))
-  }
-
-  addToCart(data) {
-    simpleCart.add({ 
-      name: data.name,
-      price: data.price,
-      size: data.size || null,
-      quantity: data.quantity
-    });
-  }
-
-  renderProduct(product, index) {
-    const productStyle = {
-      backgroundImage: 'url(' + this.getAbsoluteURL(product.image_url) + ')',
-    }
+  render(){
+    const products = this.state.products ? this.state.products : this.fetchProductData()
     return (
-      <div 
-        key={index}
-        onClick={() => this.toggleView(index)}
-        className='c-product__catalogue-wrapper'>
-        <div className='c-product__catalogue-container'>
-          <div 
-            className='c-product__catalogue-content' 
-            style={productStyle}>
-            <span>{product.title}</span>
-            <span>{product.price}</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  renderProductView(data) {
-    const product = this.state.products[this.state.selected]
-    return (
-      <div className='c-store-product-wrapper__full'>
-        <div 
-          onClick={()=> this.toggleView(null)}
-          className='c-button c-button--small'>
-          Go Back
-        </ div>
-        <div className="simpleCart_shelfItem">
-          <h2 className="item_name"> Awesome T-shirt </h2>
-          <input type="text" value="1" className="item_Quantity" />
-          <span className="item_price">$35.99</span>
-          <a className="item_add" href="javascript:;"> Add to Cart </a>
-        </div>
-        {/* <div className='c-product-image' style={{backgroundImage: 'url(' + this.getAbsoluteURL(product.image_url)}} />
-        <div className='c-product__description'>
-          {product.description}
-        </div>
-        <div className='c-product__price'>
-          {product.price}
-        </div>
-        <div className='c-product__quantity'>
-          Stock: {product.quantity}
-        </div>
-        <div className='c-button c-button--small'
-          onClick={()=>this.addToCart(product)}>Add to Cart</div> */}
-        <div 
-          onClick={()=>{this.setState({showCart: true})}}
-          className='c-button c-button--small'>View Cart</div>
-        {this.state.showCart && <div className="simpleCart_items"></div>}
-      </div>
-    )
-  }
-
-  renderCatalogueView() {
-    return (
-      this.state.products.map((data, index) => {
-        return this.renderProduct(data, index)
-      })
-    )
-  }
-
-  render() {
-    return (
-      <div className='c-store-wrapper'>
-        {this.state.catalogueView ? this.renderCatalogueView() : this.renderProductView()}
+      <div>
+        { products && 
+          <Switch>
+            <Route exact path='/' render={(props) => ( <Catalogue {...props} products={products} /> )} />
+            <Route path='/product/:value' render={(props) => ( <Product {...props} data={products[Number(props.match.params.value)]} /> )} />
+            <Route path='/cart/:value' render={ (props) => ( <Cart lastProduct={props.match.params.value}/> )} />
+          </Switch>
+        }
       </div>
     )
   }

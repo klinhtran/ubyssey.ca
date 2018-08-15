@@ -1386,7 +1386,7 @@
 			});		
 
 
-			// class for wrapping DOM selector shit
+			// class for wrapping DOM selector stuff
 			simpleCart.ELEMENT = function (selector) {
 
 				this.create(selector);
