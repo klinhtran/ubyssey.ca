@@ -8,12 +8,13 @@ const getAbsoluteURL = (imageURL) => {
 }
 
 const renderProduct = (product, index) => {
+  console.log('product', product)
   const productImage = {
-    backgroundImage: 'url(' + getAbsoluteURL(product.image_url) + ')',
+    backgroundImage: 'url(' + getAbsoluteURL(product.image.image.url_thumb) + ')',
   }
   return (
-    <Link 
-      to={'/product/' + String(index)} 
+    <Link
+      to={'/product/' + String(index)}
       key={index}
       className='c-product__catalogue-wrapper'>
       <div className='c-product__catalogue-container'>

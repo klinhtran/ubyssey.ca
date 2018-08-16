@@ -66,6 +66,7 @@
         top: 0;
         left: 0;
         right: 0;
+        background-repeat: no-repeat;
       }
       .c-product__catalogue-wrapper {
         width: 33.3%;
@@ -78,19 +79,19 @@
           padding-bottom: 1rem;
           padding-right: 1rem;
           box-sizing: border-box;
-  
+
           .c-product__catalogue-image {
             bottom: 50px;
             padding: 10px;
-  
+
             &.sold-out {
               background-color: rgba(255, 255, 255, .6);
             }
           }
-    
+
         }
       }
-  
+
     }
   }
 }
