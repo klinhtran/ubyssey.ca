@@ -1,12 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import SelectInput from './SelectInput.jsx';
+
+const size = [
+  'small',
+  'med',
+  'lg'
+]
 
 class Product extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       quantity: 1,
-      size: 'medium',
     }
   }
 
@@ -22,47 +27,35 @@ class Product extends React.Component {
   render() {
     console.log('this.props', this.props)
     const product = this.props.data
-    const imageURL = this.props.data.image.image.url_medium
+    const productImage = { backgroundImage: 'url(' + this.props.data.image.image.url + ')'}
     return (
       <div className='c-product-wrapper'>
-        <Link
-          to='/'
-          className='c-button c-button--small'>
-          Continute Shopping </ Link>
-        <div className='left c-produc-image'>
-          <img src={imageURL} />
+        <div className='left'>
+          <div className='c-product-image' style={productImage} />
         </div>
         <div className='right'>
           <div className='simpleCart_shelfItem'>
             <h2 className="item_name">{product.name}</h2>
+            <div className='flex'>
+              <div className='left flex-column'>
+                {/* { this.props.data.size && <SelectInput title='Size' data={this.props.data.size}/> } */}
+                <SelectInput title='Size' data={size}/>
 
-            <label htmlFor='item_size'>Size</label>
-            <select
-              name='size'
-              id='item_size'
-              value={this.state.size}
-              onChange={this.updateInputs}>
-                <option value="small">Sm</option>
-                <option value="medium">Md</option>
-                <option value="large">Lg</option>
-                <option value="x-large">Xl</option>
-            </select>
+                <label htmlFor='item_quantity'><h3>Quantity</h3></label>
+                <input
+                  id='item_quantity'
+                  name='quantity'
+                  type="number"
+                  value={this.state.quantity}
+                  onChange={this.updateInputs}
+                  className="item_quantity" />
+              </div>
 
-            <label htmlFor='item_quantity'>Quantity</label>
-            <input
-              id='item_quantity'
-              name='quantity'
-              type="number"
-              value={this.state.quantity}
-              onChange={this.updateInputs}
-              className="item_Quantity" />
-
-            <span className="item_price">{product.price}</span>
-            <a className="item_add c-button c-button-small" href="javascript:;"> Add to Cart </a>
-            <Link
-              to={'/cart/' + String(this.props.match.params.value)}
-              className='c-button-outline c-button--small'>
-              View Cart </Link>
+              <div className='right flex-column'>
+                <span className="item_price">{product.price}</span>
+                <a className="item_add c-button c-button-small" href="javascript:;"> <i className="fa fa-shopping-cart"></i> Add to Cart </a>
+              </div>
+              </div>
           </div>
 
         </div>

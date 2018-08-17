@@ -7,5 +7,5 @@ export {
   Store as Store,
   Catalogue as Catalogue,
   Product as Product,
-  Cart as Cart
+  Cart as Cart,
 }

@@ -11,10 +11,6 @@ class Cart extends React.Component {
   render () {
     return (
       <div className='c-cart-wrapper'>
-        <Link 
-          to={'/product/' + String(this.props.lastProduct)}
-          className='c-button c-button--small'>
-          Go Back </ Link>
         <div className="simpleCart_items" />
         <a href="javascript:;" className="simpleCart_empty">Empty Cart</a>
         <a className="simpleCart_checkout c-button-outline c-button-small" href="javascript:;" >Checkout</a>

@@ -1,19 +1,23 @@
 import React from 'react'
 import DispatchAPI from '../../api/dispatch'
 
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import { Catalogue, Product, Cart} from './'
 
 class Store extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      products: null
+      products: null,
     }
   }
 
   componentDidMount() {
     this.fetchProductData()
+
+    simpleCart.bind( "afterAdd" , function( item ){
+      console.log( item.get("id") + " was added to the cart!" );
+    });
   }
 
   fetchProductData() {
@@ -38,9 +42,22 @@ class Store extends React.Component {
       <div className='c-store-wrapper'>
         { products &&
           <Switch>
-            <Route exact path='/' render={(props) => ( <Catalogue {...props} products={products} /> )} />
-            <Route path='/product/:value' render={(props) => ( <Product {...props} data={products[Number(props.match.params.value)]} /> )} />
-            <Route path='/cart/:value' render={ (props) => ( <Cart lastProduct={props.match.params.value}/> )} />
+            <Route exact path='/' render={(props) => (
+              <div>
+                <Catalogue {...props} products={products} /> 
+              </div>
+            )} />
+            <Route path='/product/:value' render={(props) => ( 
+              <div>
+                <Product {...props} data={products[Number(props.match.params.value)]} /> 
+              </div>
+            )} />
+            <Route path='/cart' render={ () => ( 
+              <div>
+                <Link to='/' className='c-button-outline c-button--small'>Continute Shopping </ Link>
+                <Cart /> 
+              </div>  
+            )} />
           </Switch>
         }
       </div>
