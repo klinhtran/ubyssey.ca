@@ -9,6 +9,7 @@ class Store extends React.Component {
     super(props)
     this.state = {
       products: null,
+      cartVisible: false,
     }
   }
 
@@ -22,6 +23,7 @@ class Store extends React.Component {
 
   fetchProductData() {
     simpleCart.init()
+    this.bindViewCart()
 
     DispatchAPI.store.get(this.props.id)
     .then ((response)=> {
@@ -31,32 +33,51 @@ class Store extends React.Component {
     })
   }
 
+  bindViewCart() {
+    document.getElementById("ubyssey-store-view-cart").addEventListener("click", () => {
+    this.showCart()
+    });
+  }
+
   componentDidUpdate() {
-    console.log('update')
     simpleCart.update()
   }
 
+  showCart() {
+    this.setState({
+      cartVisible: true
+    })
+  }
+
+  hideCart() {
+    this.setState({
+      cartVisible: false
+    })
+  }
+  
   render(){
     const products = this.state.products ? this.state.products : this.fetchProductData()
     return (
       <div className='c-store-wrapper'>
         { products &&
-          <Switch>
+          <Switch >
             <Route exact path='/' render={(props) => (
-              <div>
+              <div className='full-height' >
                 <Catalogue {...props} products={products} /> 
+                <Cart cartVisible={this.state.cartVisible} hideCart={() => this.hideCart()} />
               </div>
             )} />
             <Route path='/product/:value' render={(props) => ( 
-              <div>
-                <Product {...props} data={products[Number(props.match.params.value)]} /> 
+              <div className='full-height'>
+                <Product 
+                  {...props} 
+                  data={products[Number(props.match.params.value)]}
+                  showCart={() => this.showCart()} /> 
+                <Cart 
+                  cartVisible={this.state.cartVisible} 
+                  hideCart={() => this.hideCart()} 
+                   />
               </div>
-            )} />
-            <Route path='/cart' render={ () => ( 
-              <div>
-                <Link to='/' className='c-button-outline c-button--small'>Continute Shopping </ Link>
-                <Cart /> 
-              </div>  
             )} />
           </Switch>
         }

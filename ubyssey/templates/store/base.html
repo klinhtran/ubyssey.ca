@@ -37,14 +37,44 @@
           // array representing the format and columns of the cart,
           // see the cart columns documentation
           cartColumns: [
-              { attr: "name", label: "Name"},
+              { view: function(item, column) { 
+                const name = item.get('name')
+                const description = item.get('description')
+                const size = item.get('size')
+                return (
+                  `
+                    <div class='flex-row a-center c-cart-product'>
+                      <div class='c-cart-image' style='background-image: url("${item.get('imageURL')}")'></div>
+                      <div class='flex-row'>
+                        <div class='flex-column j-space-between'>
+                          <h3>${name}</h3>
+                          ${size ? `<em>Size: ${size}</em>` : ``}
+                        </div>
+                      </div>
+                      <a href='javascript:;' class='flex-row simpleCart_remove'> 
+                        <i class="fa fa-trash" /> Remove
+                      </a>
+                    </div>
+                  `
+                )
+              },attr: "name", label: "Product"},
               { view: "currency", attr: "price", label: "Price"},
-              { view: "decrement", label: false},
-              { attr: "quantity", label: "Qty"},
-              { view: "increment", label: false},
-              { attr: "size", label: 'Size'},
-              { view: "currency", attr: "total", label: "SubTotal" },
-              { view: "remove", text: "Remove", label: false}
+              { view: function( item , column ){
+                // return some html
+                return (
+                  `
+                    <div class='flex-row j-space-around a-center c-cart-quantity'>
+                      ${item.quantity()} 
+                      <div class='flex-column j-space-around'>
+                        <a href='javascript:;' class="simpleCart_increment fa fa-sort-up"></a> 
+                        <div style='height: 10px'></div>
+                        <a href='javascript:;' class="simpleCart_decrement fa fa-sort-down"></a> 
+                      </div>
+                    </div>
+                  `
+                )
+              }, attr: "quantity", label: "Qty",},
+              { view: "currency", attr: "total", label: "Total" },
           ],
           cartStyle: "div", 
           // how simpleCart should checkout, see the 

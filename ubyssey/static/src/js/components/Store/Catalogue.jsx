@@ -8,7 +8,6 @@ const getAbsoluteURL = (imageURL) => {
 }
 
 const renderProduct = (product, index) => {
-  console.log('product', product)
   const productImage = {
     backgroundImage: 'url(' + getAbsoluteURL(product.image.image.url_medium) + ')',
   }

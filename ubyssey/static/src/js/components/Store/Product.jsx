@@ -12,6 +12,7 @@ class Product extends React.Component {
     super(props)
     this.state = {
       quantity: 1,
+      size: 'small'
     }
   }
 
@@ -24,10 +25,25 @@ class Product extends React.Component {
     })
   }
 
-  render() {
-    console.log('this.props', this.props)
+  addToCart() {
     const product = this.props.data
-    const productImage = { backgroundImage: 'url(' + this.props.data.image.image.url + ')'}
+    let newItem = simpleCart.add({
+      name: product.name,
+      quantity: this.state.quantity,
+      size: this.state.size,
+      price: product.price,
+      description: product.description,
+      imageURL: product.image.image.url_thumb
+    })
+
+    this.props.showCart()
+
+    console.log(newItem)
+  }
+
+  render() {
+    const product = this.props.data
+    const productImage = { backgroundImage: 'url(' + product.image.image.url + ')'}
     return (
       <div className='c-product-wrapper'>
         <div className='left'>
@@ -35,29 +51,26 @@ class Product extends React.Component {
         </div>
         <div className='right'>
           <div className='simpleCart_shelfItem'>
-            <h2 className="item_name">{product.name}</h2>
-            <div className='flex'>
-              <div className='left flex-column'>
-                {/* { this.props.data.size && <SelectInput title='Size' data={this.props.data.size}/> } */}
-                <SelectInput title='Size' data={size}/>
+            <h1 className="item_name">{product.name}</h1>
+            <span className="item_price"><h2>${product.price}</h2></span>
+            <p>{product.description}</p>
+            <div className='flex-row'>
+              {/* { this.props.data.size && <SelectInput title='Size' data={this.props.data.size}/> } */}
+              <SelectInput title='Size' data={size}/>
 
-                <label htmlFor='item_quantity'><h3>Quantity</h3></label>
-                <input
-                  id='item_quantity'
-                  name='quantity'
-                  type="number"
-                  value={this.state.quantity}
-                  onChange={this.updateInputs}
-                  className="item_quantity" />
-              </div>
-
-              <div className='right flex-column'>
-                <span className="item_price">{product.price}</span>
-                <a className="item_add c-button c-button-small" href="javascript:;"> <i className="fa fa-shopping-cart"></i> Add to Cart </a>
-              </div>
-              </div>
+              <label htmlFor='item_quantity'><h3>Quantity</h3></label>
+              <input
+                id='item_quantity'
+                name='quantity'
+                type="number"
+                value={this.state.quantity}
+                onChange={this.updateInputs}
+                className="item_quantity" />
+            </div>
+            <div className='flex-row'>
+              <div className="c-button-dark" onClick={() => {this.addToCart()}}> <i className="fa fa-shopping-cart"></i> Add to Cart </div>
+            </div>
           </div>
-
         </div>
       </div>
     )
