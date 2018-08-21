@@ -11,12 +11,14 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django_user_agents.utils import get_user_agent
 
 from django_user_agents.utils import get_user_agent
 
-from dispatch.models import Article, Section, Topic, Person
+from dispatch.models import Article, Section, Subsection, Topic, Person
 
 import ubyssey
+import ubyssey.cron
 from ubyssey.helpers import ArticleHelper, PageHelper
 
 from react.render import render_component
@@ -29,6 +31,7 @@ def parse_int_or_none(maybe_int):
         return int(maybe_int)
     except (TypeError, ValueError):
         return None
+
 
 class UbysseyTheme(object):
 
@@ -49,6 +52,8 @@ class UbysseyTheme(object):
 
         sections = ArticleHelper.get_frontpage_sections(exclude=frontpage_ids)
 
+        breaking = ArticleHelper.get_breaking_news().first()
+
         try:
             articles = {
                 'primary': frontpage[0],
@@ -57,6 +62,7 @@ class UbysseyTheme(object):
                 'bullets': frontpage[4:6],
                 # Get random trending article
                 'trending': trending_article,
+                'breaking': breaking
              }
         except IndexError:
             raise Exception('Not enough articles to populate the frontpage!')
@@ -78,6 +84,7 @@ class UbysseyTheme(object):
             'articles': articles,
             'sections': sections,
             'popular': popular,
+            'breaking': breaking,
             'blog': blog,
             'day_of_week': datetime.now().weekday()
         }
@@ -92,19 +99,51 @@ class UbysseyTheme(object):
 
         article.add_view()
 
+        breaking = ArticleHelper.get_breaking_news().exclude(id=article.id).first()
+
+        # determine if user is viewing from mobile
+        article_type = 'desktop'
+        user_agent = get_user_agent(request)
+        if user_agent.is_mobile:
+            article_type = 'mobile'
+
+
+        if article.template == 'timeline':
+            timeline_tag = article.tags.filter(name__icontains='timeline-')
+            timelineArticles = Article.objects.filter(tags__in=timeline_tag, is_published=True)
+            temp = list(timelineArticles.values('parent_id', 'template_data', 'slug', 'headline', 'featured_image'))
+            try:
+                temp = sorted(temp, key=lambda article: json.loads(article['template_data'])['timeline_date'])
+            except:
+                pass
+            for i, a in enumerate(timelineArticles) :
+                try:
+                    temp[i]['featured_image'] = a.featured_image.image.get_thumbnail_url()
+                except:
+                    temp[i]['featured_image'] = None
+            article.timeline_articles = json.dumps(temp)
+            article.timeline_title = list(timeline_tag)[0].name.replace('timeline-', '').replace('-', ' ')
+
+
         ref = request.GET.get('ref', None)
         dur = request.GET.get('dur', None)
 
-        authors_json_name = json.dumps([a.person.full_name for a in article.authors.all()])
+        if not ArticleHelper.is_explicit(article):
+            article.content = ArticleHelper.insert_ads(article.content, article_type)
+
+        popular = ArticleHelper.get_popular()[:5]
 
         context = {
             'title': '%s - %s' % (article.headline, self.SITE_TITLE),
             'meta': ArticleHelper.get_meta(article),
             'article': article,
             'reading_list': ArticleHelper.get_reading_list(article, ref=ref, dur=dur),
-            'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
+            # 'suggested': lambda: ArticleHelper.get_random_articles(2, section, exclude=article.id),
             'base_template': 'base.html',
-            'reading_time': ArticleHelper.get_reading_time(article)
+            'popular': popular,
+            'reading_time': ArticleHelper.get_reading_time(article),
+            'explicit': ArticleHelper.is_explicit(article),
+            'breaking': breaking
         }
 
         # template = article.get_template_path()
@@ -172,7 +211,7 @@ class UbysseyTheme(object):
 
     def article_ajax(self, request, pk=None):
         article = Article.objects.get(parent_id=pk, is_published=True)
-        authors_json = json.dumps([a.person.full_name for a in article.authors.all()])
+        authors_json = [a.person.full_name for a in article.authors.all()]
 
         context = {
             'article': article,
@@ -180,11 +219,18 @@ class UbysseyTheme(object):
             'base_template': 'blank.html'
         }
 
+        try:
+            featured_image = article.featured_image.image.get_thumbnail_url()
+        except:
+            featured_image = None
+
         data = {
             'id': article.parent_id,
             'headline': article.headline,
             'url': article.get_absolute_url(),
-            'html': loader.render_to_string(article.get_template_path(), context)
+            'authors': authors_json,
+            'published_at': str(article.published_at),
+            'featured_image': featured_image
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
@@ -193,7 +239,7 @@ class UbysseyTheme(object):
         try:
             page = PageHelper.get_page(request, slug)
         except:
-            raise Http404('Page could not be found.')
+            return self.subsection(request, slug)
 
         page.add_view()
 
@@ -258,7 +304,9 @@ class UbysseyTheme(object):
 
         query = request.GET.get('q', False)
 
-        featured_articles = Article.objects.filter(section=section, is_published=True).order_by('-published_at')
+        subsections = Subsection.objects.filter(section=section, is_active=True)
+
+        featured_articles = Article.objects.filter(section=section, is_published=True).exclude(subsection__in=subsections).order_by('-published_at')
 
         article_list = Article.objects.filter(section=section, is_published=True).order_by(order_by)
 
@@ -283,6 +331,7 @@ class UbysseyTheme(object):
                 'title': section.name,
             },
             'section': section,
+            'subsections': subsections,
             'type': 'section',
             'featured_articles': {
                 'first': featured_articles[0],
@@ -294,6 +343,62 @@ class UbysseyTheme(object):
         }
 
         t = loader.select_template(['%s/%s' % (section.slug, 'section.html'), 'section.html'])
+        return HttpResponse(t.render(context))
+
+    def subsection(self, request, slug=None):
+        try:
+            subsection = Subsection.objects.get(slug=slug, is_active=True)
+        except:
+            raise Http404('Page could not be found')
+
+        if not subsection.get_published_articles().exists():
+            raise Http404('Page could not be found')
+
+        order = request.GET.get('order', 'newest')
+
+        if order == 'newest':
+            order_by = '-published_at'
+        else:
+            order_by = 'published_at'
+
+        query = request.GET.get('q', False)
+
+        featured_articles = Article.objects.filter(subsection=subsection, is_published=True).order_by('-published_at')
+
+        article_list = Article.objects.filter(subsection=subsection, is_published=True).order_by(order_by)
+
+        if query:
+            article_list = article_list.filter(headline__icontains=query)
+
+        paginator = Paginator(article_list, 15) # Show 15 articles per page
+
+        page = request.GET.get('page')
+
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range, deliver last page of results.
+            articles = paginator.page(paginator.num_pages)
+
+        context = {
+            'meta': {
+                'title': subsection.name
+            },
+            'subsection': subsection,
+            'type': 'subsection',
+            'featured_articles': {
+                'first': featured_articles[0],
+                'rest': featured_articles[1:4]
+            },
+            'articles': articles,
+            'order': order,
+            'q': query
+        }
+
+        t = loader.select_template(['%s/%s' % (subsection.slug, 'subsection.html'), 'subsection.html'])
         return HttpResponse(t.render(context))
 
     def author(self, request, slug=None):
@@ -443,3 +548,6 @@ class UbysseyTheme(object):
 
     def centennial(self, request):
         return render(request, 'centennial.html', {})
+
+    def notification(self, request):
+        return render(request, 'notification_signup.html', {})

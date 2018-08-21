@@ -8,8 +8,9 @@ BASE_URL = 'https://www.ubyssey.ca/'
 CANONICAL_DOMAIN = 'www.ubyssey.ca'
 
 SECRET_KEY = Secrets.get('SECRET_KEY')
+NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
 
-VERSION = '1.4.9'
+VERSION = '1.4.46'
 
 ALLOWED_HOSTS = [
     'ubyssey.ca',

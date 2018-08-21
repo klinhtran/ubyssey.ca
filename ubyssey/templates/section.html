@@ -20,6 +20,11 @@
         {% include 'objects/articles/column.html' with article=article %}
       {% endfor %}
       </div>
+      {% for subsection in subsections %}
+        {% if subsection.get_published_articles %}
+          {% include 'objects/subsection.html' with subsection=subsection %}
+        {% endif %}
+      {% endfor %}
     </div>
 
     <h3 class="c-page__section">Archive</h3>
