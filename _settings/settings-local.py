@@ -38,6 +38,8 @@ DATABASES = {
     },
 }
 
+REACT_APP_DIR = os.path.join(os.path.dirname(__file__), '../../mobile')
+
 TEMPLATES += [
     {
         'NAME': 'ubyssey',
@@ -52,8 +54,6 @@ TEMPLATES += [
         },
     }
 ]
-
-REACT_APP_DIR = os.path.join(os.path.dirname(__file__), '../../mobile')
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
