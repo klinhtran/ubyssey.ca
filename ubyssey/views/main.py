@@ -2,6 +2,7 @@ from datetime import datetime
 import random
 import json
 
+from django.forms.models import model_to_dict
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.template import loader
@@ -106,23 +107,58 @@ class UbysseyTheme(object):
             'reading_time': ArticleHelper.get_reading_time(article)
         }
 
-        template = article.get_template_path()
-        t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
-        # return HttpResponse(t.render(context))
+        # template = article.get_template_path()
+        # t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
 
-        # If user_agent is not PC, show the mobile app?
+        # If user_agent is not PC, show the mobile app
         user_agent = get_user_agent(request)
         if user_agent.is_pc:
-            print(user_agent)
+            template = article.get_template_path()
+            t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
             return HttpResponse(t.render(context))
         else:
-            print(user_agent)
-            # rendered = render_component('App.js')
-            # print(rendered)
-            # return render(request, 'index.html', context)
             try:
-                with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
-                    return HttpResponse(f.read())
+
+                # return render(request, 'index.html', context)
+                return render(request, 'index.html', context)
+                # print("trying")
+
+                # template = article.get_template_path()
+                # print(template)
+
+
+                # template = article.get_template_path()
+                # t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/default.html'])
+                # print(t)
+
+                # print(HttpResponse(t.render(context)))
+
+                # template = os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')
+                # print(template)
+                # print("after template")
+                # t = loader.select_template(['%s/%s' % (article.section.slug, template), template, 'article/mobile.html'])
+                # print("blah")
+                # print(t)
+                # return HttpResponse(t.render(context))
+ 
+
+                # with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                #     return HttpResponse(f.read())
+
+
+                # render_component(
+                #     path=os.path.join(settings.REACT_APP_DIR, 'build', 'index.html'),
+                #     
+                #     to_static_markup=False,
+                #     
+                #     request_headers={
+                #       'Accept-Language': 'da, en-gb;q=0.8, en;q=0.7'
+                #     },
+                #     
+                #     timeout=None
+                # )
+                
+
             except IOError:
                 logging.exception('Production build of app not found')
                 return HttpResponse(

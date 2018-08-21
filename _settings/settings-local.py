@@ -56,8 +56,6 @@ REACT_APP_DIR = os.path.join(os.path.dirname(__file__), '../../mobile')
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
-    # os.path.join(os.path.dirname(__file__), '../../mobile/public'),
-    # os.path.join(os.path.dirname(__file__), '../../mobile/src'),
     os.path.join(REACT_APP_DIR, 'build', 'static'),
 )
 
