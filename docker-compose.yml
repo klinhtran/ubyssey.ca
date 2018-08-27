@@ -3,10 +3,13 @@ services:
 
 ## Starts up mySQL server for ubyssey.ca and Dispatch
   db:
-    build: mysql/
+    # build: mysql/
+    image: mysql:5.7
     environment:
+      MYSQL_ROOT_PASSWORD: ubyssey
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ubyssey
       MYSQL_DATABASE: ubyssey
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -38,6 +41,6 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+        # condition: service_healthy
     container_name: ubyssey-dev
