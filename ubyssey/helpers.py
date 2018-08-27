@@ -1,5 +1,6 @@
 import datetime
-from random import randint
+import pytz
+from random import randint, choice
 
 from django.http import Http404
 from django.db import connection
@@ -29,6 +30,47 @@ class ArticleHelper(object):
 
         reading_time = word_count / words_per_min
         return reading_time
+
+    @staticmethod
+    def insert_ads(content, article_type='desktop'):
+        """Inject upto 5 ads evenly throughout the article content.
+        Ads cannot inject directly beneath headers."""
+        ad = {
+            'type': 'ad',
+            'data': article_type
+        }
+
+        paragraph_count = 1
+
+        for block in content:
+            paragraph_count = len(filter(lambda b: b['type'] == 'paragraph', content))
+
+        number_of_ads = 1
+        paragraphs_per_ad = 6
+
+        while paragraph_count / number_of_ads > paragraphs_per_ad :
+            number_of_ads += 1
+            if number_of_ads >= 5:
+                paragraphs_per_ad = paragraph_count // number_of_ads
+                break
+
+        ad_count = 0
+        paragraph_count = 0
+        next_ad = randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
+        ad_placements = content
+
+        for index, block in enumerate(content):
+            if block['type'] == 'paragraph':
+                paragraph_count += 1
+            if paragraph_count == next_ad:
+                    if index != 0 and content[index - 1]['type'] != 'header':
+                        ad_placements.insert(index + ad_count, ad)
+                        next_ad += randint(paragraphs_per_ad - 2, paragraphs_per_ad + 2)
+                        ad_count += 1
+                    else:
+                        next_ad += 1
+
+        return ad_placements
 
     @staticmethod
     def get_frontpage(reading_times=None, section=None, section_id=None, sections=[], exclude=[], limit=7, is_published=True, max_days=14):
@@ -132,19 +174,13 @@ class ArticleHelper(object):
 
     @staticmethod
     def get_years():
-        # query = 'SELECT DISTINCT YEAR(published_at) FROM dispatch_article WHERE published_at IS NOT NULL ORDER BY published_at DESC'
-        #
-        # cursor = connection.cursor()
-        # cursor.execute(query)
-        #
-        # results = cursor.fetchall()
-        #
-        # years = [r[0] for r in results]
-        #
-        # return filter(lambda y: y is not None, years)
+        publish_dates = Article.objects.filter(is_published=True).dates('published_at','year',order='DESC')
+        years = []
 
-        # TODO: fix this query ^ or replace with something better
-        return [2017, 2016, 2015]
+        for publish_date in publish_dates:
+            years.append(publish_date.year)
+
+        return years
 
     @staticmethod
     def get_topic(topic_name):
@@ -155,10 +191,19 @@ class ArticleHelper(object):
         )
 
     @staticmethod
+    def is_explicit(article):
+        explicit_tags = ['sex', 'explicit']
+        tags = article.tags.all().values_list('name', flat=True)
+        for tag in tags:
+            if tag.lower() in explicit_tags:
+                return True
+        return False
+
+    @staticmethod
     def get_random_articles(n, section, exclude=None):
         """Returns `n` random articles from the given section."""
 
-        # Get all magazine articles
+        # Get all articles in section
         queryset = Article.objects.filter(is_published=True, section__slug=section)
 
         # Exclude article (optional)
@@ -210,6 +255,33 @@ class ArticleHelper(object):
         return articles.order_by('-views')
 
     @staticmethod
+    def get_breaking_news():
+        """Returns breaking news stories"""
+        return Article.objects.filter(is_published=True, is_breaking=True, breaking_timeout__gte=datetime.datetime.now())
+
+    @staticmethod
+    def get_trending():
+        """Returns the most trending articles in the time period."""
+
+        DURATION = 6
+
+        articles = Article.objects.filter(is_published=True)
+
+        end = datetime.datetime.now()
+        start = end - datetime.timedelta(hours=DURATION)
+        time_range = (pytz.utc.localize(start), pytz.utc.localize(end))
+        trending_articles = articles.filter(
+            published_at__range=(time_range),
+            views__gt=1000)
+
+        if len(trending_articles) == 0:
+            trending_article = None
+        else:
+            trending_article = choice(trending_articles)
+
+        return trending_article
+
+    @staticmethod
     def get_meta(article, default_image=None):
         try:
             image = article.featured_image.image.get_medium_url()
@@ -227,14 +299,10 @@ class ArticleHelper(object):
 class PageHelper(object):
     @staticmethod
     def get_page(request, slug):
-        if request.user.is_staff:
-            try:
-                page = Page.objects.get(slug=slug, head=True)
-            except Article.DoesNotExist:
-                raise Http404("This page does not exist.")
-        else:
-            try:
-                page = Page.objects.get(slug=slug, is_published=True)
-            except Page.DoesNotExist:
-                raise Http404("This page does not exist.")
-        return page
+        """If the url requested includes the querystring parameters 'version' and 'preview_id',
+        get the page with the specified version and preview_id.
+
+        Otherwise, get the published version of the page.
+        """
+
+        return Page.objects.get(request=request, slug=slug, is_published=True)

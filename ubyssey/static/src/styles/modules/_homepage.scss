@@ -30,6 +30,63 @@ div.frontpage-container {
   }
 }
 
+div.main-widget {
+
+  @media($bp-smaller-than-desktop) {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media($bp-smaller-than-phablet) {
+    padding-bottom: 25px;
+  }
+
+}
+
+div.c-election-banner-container {
+
+  padding-top: 20px;
+
+  img.election-banner {
+    width: 100%;
+    height: 100%;
+  }
+
+}
+
+div.c-election-fb-live {
+
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media($bp-smaller-than-mobile) {
+    min-width: 300px;
+  }
+
+  @media($bp-larger-than-mobile) {
+    min-width: 400px;
+  }
+
+  @media($bp-larger-than-phablet) {
+    min-width: 500px;
+  }
+
+  @media($bp-larger-than-desktop) {
+    margin-right: 15px;
+  }
+
+}
+
 div.frontpage {
 
   display: table-row;
@@ -455,11 +512,6 @@ ul.article-list, ol.article-list {
     }
 
   }
-
-  // Hide when printed
-  @media print {
-    display: none;
-  }
 }
 
 
@@ -467,14 +519,15 @@ ol.article-list {
   counter-reset: ol-counter;
   > li {
     h4.headline {
-      font-weight: normal;
       margin-bottom: 0;
+      padding-top: 1px;
+      line-height: 1.25em;
     }
     margin: 18px 0;
     position: relative;
     padding-top: 0;
     padding-bottom: 15px;
-    padding-left: 40px;
+    padding-left: 30px;
     a {
       display: inline-block;
     }
@@ -490,11 +543,9 @@ ol.article-list {
       position: absolute;
       top: 0;
       left: 0;
-      width: 40px;
+      width: 30px;
       font-size: 15px;
       line-height: 24px;
-      text-align: center;
-      color: rgb(50,50,50);
       content: counter(ol-counter) ".";
       counter-increment: ol-counter;
     }
@@ -502,8 +553,50 @@ ol.article-list {
   }
 }
 
+.o-breaking-news{
+  width: 100%;
+  display:flex;
+  border-radius: 3px;
+  background-color:#e41818;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h3 {
+    padding-left: 1rem;
+    color: white;
+    p {
+      color: white;
+      font-weight: lighter;
+    }
+  }
+}
+
 @media($bp-larger-than-phablet){
   ol.article-list {
     padding: 0;
+  }
+}
+
+.o-trending-article {
+  .o-trending-badge {
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 22px;
+    background: #fd3333;
+    text-align: center;
+    line-height: 22px;
+    letter-spacing: 0;
+    margin-right: 2px;
+    font-size: 13px;
+    margin-bottom: 5px;
+
+    @media($bp-smaller-than-phablet){
+      margin-left: 15px;
+      margin-top: 15px;
+      margin-bottom: 0px;
+    }
   }
 }

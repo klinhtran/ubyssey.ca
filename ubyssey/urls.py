@@ -2,9 +2,9 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.shortcuts import render_to_response
+from django.contrib.staticfiles.views import serve as serve_static
 
-from dispatch.admin import urls as admin_urls
-from dispatch.api import urls as api_urls
+from dispatch.urls import admin_urls, api_urls, podcasts_urls
 
 from ubyssey.views.feed import FrontpageFeed, SectionFeed
 from ubyssey.views.main import UbysseyTheme
@@ -19,6 +19,8 @@ from ubyssey.templates import *
 from ubyssey.events.api.urls import urlpatterns as event_api_urls
 from ubyssey.events.urls import urlpatterns as events_urls
 
+from django.views.generic import TemplateView
+
 theme = UbysseyTheme()
 guide = GuideTheme()
 magazine = MagazineTheme()
@@ -27,6 +29,7 @@ advertise = AdvertiseTheme()
 urlpatterns = [
     url(r'^admin', include(admin_urls)),
     url(r'^api/', include(api_urls)),
+    url(r'^podcasts/', include(podcasts_urls)),
 
     url(r'^$', theme.home, name='home'),
     url(r'^search/$', theme.search, name='search'),
@@ -43,16 +46,21 @@ urlpatterns = [
 
     # Magazine
     url(r'^magazine/$', magazine.landing, name='magazine-landing'),
+    url(r'^magazine/2017/$', magazine.landing_2017, name='magazine-landing-2017'),
     url(r'^magazine/(?P<slug>[-\w]+)/$', magazine.article, name='magazine-article'),
 
     # Advertising
     url(r'^advertise/$', advertise.landing, name='advertise-landing'),
+    url(r'^advertise/new/$', advertise.new, name='advertise-new'),
 
     # Elections
     url(r'^elections/$', theme.elections, name='elections'),
 
     # Centennial
     url(r'^100/$', theme.centennial, name='centennial-landing'),
+
+    # Beta-features
+    # url(r'^beta/notifications/$', theme.notification, name='notification-beta'),
 
     # Events
     url(r'^events/', include(events_urls)),
@@ -61,7 +69,9 @@ urlpatterns = [
     url(r'^(?P<section>[-\w]+)/(?P<slug>[-\w]+)/$', theme.article, name='article'),
     url(r'^(?P<slug>[-\w]+)/$', theme.section, name='page'),
     url(r'^api/articles/(?P<pk>[0-9]+)/rendered/$', theme.article_ajax, name='article-ajax'),
+
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [url(r'^service-worker.js', serve_static, kwargs={'path': 'service-worker.js'})]

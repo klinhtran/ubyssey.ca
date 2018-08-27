@@ -1,23 +1,39 @@
 {% load staticfiles %}
 {% load humanize %}
-{% load widgets %}
+{% load dispatch_tags %}
 <div class="homepage-section frontpage-container">
     <div class="frontpage">
+      <div class="frontpage__columns">
         <div class="cell left">
-        {% with articles.secondary as article %}
+        {% if articles.trending %}
+          <div class="o-trending-article">
+          {% with articles.trending as trending_article %}
+              <div>
+                <i class="o-trending-badge fa fa-bolt" aria-hidden="true"></i>
+                <font color="red"> <b> TRENDING <b> </font>
+              </div>
+              <article class="secondary padded">
+                  <h2 class="headline"><a href="{{ trending_article.get_absolute_url }}?ref=frontpage">{{ trending_article.headline|safe }}</a></h2>
+                  <p class="o-article__snippet"><span class="timestamp">{{ trending_article.published_at|naturaltime }}</span>{{ trending_article.snippet|safe }}</p>
+              </article>
+          {% endwith %}
+          </div>
+        {% else %}
+          {% with articles.secondary as article %}
             <article class="secondary padded">
                 <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
                 <p class="o-article__snippet"><span class="timestamp">{{ article.published_at|naturaltime }}</span>{{ article.snippet|safe }}</p>
             </article>
-        {% endwith %}
+          {% endwith %}
+        {% endif %}
         {% include 'objects/advertisement.html' with size='box' name='Box_A' class='mobile-frontpage-box' id=2 %}
         {% for article in articles.thumbs %}
             <article class="thumb row padded">
                 <div class="image">
-                    <a href="{{ article.get_absolute_url }}?ref=frontpage"><img src="{{ article.featured_image.image.get_thumbnail_url }}"/></a>
+                    <a href="{{ article.get_absolute_url}}?ref=frontpage"><img src="{{ article.featured_image.image.get_thumbnail_url }}"/></a>
                 </div>
                 <div>
-                    <h2 class="headline"><a href="{{ article.get_absolute_url }}?ref=frontpage">{{ article.headline|safe }}</a></h2>
+                    <h2 class="headline"><a href="{{ article.get_absolute_url}}?ref=frontpage">{{ article.headline|safe }}</a></h2>
                     <p class="o-article__snippet"><span class="timestamp hide-desktop">{{ article.published_at|naturaltime }}</span></p>
                 </div>
             </article>
@@ -35,7 +51,7 @@
                 <div class="meta">
                     <a href="{{ article.get_absolute_url }}?ref=frontpage"><h1 class="headline">{{ article.headline|safe }}</h1></a>
                     <div class="o-article__byline">
-                      <span class="o-article___author">By {{ article.get_author_url|safe }}</span>
+                      <span class="o-article__author">By {{ article.get_author_url|safe }}</span>
                       <span> &nbsp;·&nbsp; </span>
                       <span class="o-article__published">{{ article.published_at }}</span>
                     </div>
@@ -47,5 +63,6 @@
         <div class="multi-zone cell right">
           {{ sidebar.render }}
         </div>
+      </div>
     </div>
 </div>
