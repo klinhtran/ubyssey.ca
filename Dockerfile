@@ -8,8 +8,9 @@ RUN apt-get update && apt-get -y install build-essential curl && apt-get -y inst
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
 RUN nodejs -v && npm -v
-RUN git clone https://github.com/ubyssey/ubyssey.ca.git
-RUN git clone https://github.com/ubyssey/dispatch.git
+# method for accessing specific branch
+RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 407-python-3
+RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 407-python-3
 WORKDIR ./ubyssey.ca/
 RUN pip install -r requirements.txt
 RUN cp _settings/settings-local.py ubyssey/settings.py
