@@ -1,32 +1,38 @@
-sudo: false
+sudo: required
+
 language: python
 python:
 - '2.7'
 before_install:
 - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
 - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
-install:
-- pip install -r requirements-prd.txt -t lib/
-- pip install requests --upgrade -t lib/
-- sudo apt-get install -qq libexempi3
-- cd ubyssey/static
-- npm install -g gulp
-- npm install
-script:
-- gulp build
-after_success:
-# clean up node_modules
-- rm -rf node_modules
-- cd ${TRAVIS_BUILD_DIR}
-# use deploy settings
-- mv _settings/settings-dpl.py ubyssey/settings.py
-- python manage.py collectstatic --noinput
-# gzip static files
-- find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
-# replace deploy settings with production settings
-- rm ubyssey/settings.py ubyssey/settings.pyc
-- mv _settings/settings-prd.py ubyssey/settings.py
-- rm -rf .git/
+
+services:
+  - docker
+
+
+# install:
+# - pip install -r requirements-prd.txt -t lib/
+# - pip install requests --upgrade -t lib/
+# - sudo apt-get install -qq libexempi3
+# - cd ubyssey/static
+# - npm install -g gulp
+# - npm install
+# script:
+# - gulp build
+# after_success:
+# # clean up node_modules
+# - rm -rf node_modules
+# - cd ${TRAVIS_BUILD_DIR}
+# # use deploy settings
+# - mv _settings/settings-dpl.py ubyssey/settings.py
+# - python manage.py collectstatic --noinput
+# # gzip static files
+# - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+# # replace deploy settings with production settings
+# - rm ubyssey/settings.py ubyssey/settings.pyc
+# - mv _settings/settings-prd.py ubyssey/settings.py
+# - rm -rf .git/
 deploy:
   - provider: gcs
     access_key_id: GOOG6VXJ7FN5TYTTPSQI
