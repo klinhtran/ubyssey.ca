@@ -3,24 +3,32 @@ services:
 
 ## Starts up mySQL server for ubyssey.ca and Dispatch
   db:
-    # build: mysql/
     image: mysql:5.7
+    # build: ./mysql
+    volumes:
+      - data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ubyssey
       MYSQL_USER: root
       MYSQL_PASSWORD: ubyssey
       MYSQL_DATABASE: ubyssey
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: "/usr/bin/mysql --user=root --password=ubyssey --execute \"SHOW DATABASES;\""
+      interval: 2s
       timeout: 20s
-      retries: 10
+      retries: 20
+    container_name: ubyssey_db
+
+
 
 ## Starts up static file watcher for ubyssey.ca
   gulp:
     build: .
-    command: bash -c "cd ubyssey/static && npm install && gulp"
+    # use yarn here, npm has an error with binding binary for node-sass
+    command: bash -c "cd ubyssey/static && yarn install && gulp"
     volumes:
       - .:/ubyssey.ca
+    container_name: ubyssey_gulp
 
 ## Starts up static file watcher for Dispatch platform
   yarn:
@@ -28,11 +36,12 @@ services:
     command: bash -c "cd ../dispatch/dispatch/static/manager && yarn start"
     volumes:
       - /dispatch
+    container_name: ubyssey_yarn
 
 ## Starts up Django server for ubyssey.ca and Dispatch
   django:
     build: .
-    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/ubyssey.ca
     volumes_from:
@@ -41,6 +50,9 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-        # condition: service_healthy
+      db:
+        condition: service_healthy
     container_name: ubyssey-dev
+
+volumes:
+  data: {}

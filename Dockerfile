@@ -4,7 +4,7 @@
 FROM python:2.7
 ENV PYTHONUNBUFFERED 1
 RUN export DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get -y install build-essential curl
+RUN apt-get update && apt-get -y install build-essential curl && apt-get -y install vim
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
 RUN nodejs -v && npm -v
