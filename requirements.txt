@@ -1,5 +1,5 @@
 dispatch==0.5.9
-mysql-python
+mysqlclient
 django-phonenumber-field
 beautifulsoup4
 feedparser
