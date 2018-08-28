@@ -8,7 +8,7 @@ https://docs.docker.com/
 
 *If setting up on linux, all docker and docker-compose commands should be preceeded with sudo.*se
 
-cd into the ubyssey.ca directory and runt he following command
+cd into the ubyssey.ca directory and run the following command
 ```bash
 docker-compose up
 ```
@@ -18,7 +18,7 @@ This will setup your dev docker containers. To see currently running docker cont
 docker ps
 ```
 
-#### the following should be done in a separate terminal
+#### The following should be done in a separate terminal
 
 Connect to the ubyssey_db docker container.
 ```bash
@@ -46,7 +46,6 @@ curl https://storage.googleapis.com/ubyssey/dropbox/ubyssey.sql | mysql -u root 
 
 Connect to the ubyssey-dev docker container
 ```bash
-sudo docker ps to see all container ids
 sudo docker exec -t -i ubyssey-dev bash
 ```
 
