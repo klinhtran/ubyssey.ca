@@ -40,7 +40,7 @@ services:
 ## Starts up Django server for ubyssey.ca and Dispatch
   django:
     build: .
-    command: bash -c "ls ubyssey.ca && cd ubyssey.ca && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "cd ubyssey.ca && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./dispatch/dispatch:/dispatch/dispatch
       - .:/ubyssey.ca
