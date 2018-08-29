@@ -52,9 +52,9 @@ Connect to the ubyssey-dev docker container
 sudo docker exec -t -i ubyssey-dev bash
 ```
 
-Proceed to perform any django migration tasks as usual e.g.
+Run migrations on the mysql database
 ```bash
-python manage.py showmigrations
+python manage.py migrate
 ```
 Once the database has been populated, and migrations have been applied,
 you should be able to proceed to localhost:8000 and localhost:8000/admin
