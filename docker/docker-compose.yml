@@ -23,7 +23,7 @@ services:
   gulp:
     build: .
     # use yarn here, npm has an error with binding binary for node-sass
-    command: bash -c "cd ubyssey/static && yarn install && gulp"
+    command: bash -c "cd ubyssey.ca/ubyssey/static && yarn install && gulp"
     volumes:
       - .:/ubyssey.ca
     container_name: ubyssey_gulp
@@ -31,16 +31,18 @@ services:
 ## Starts up static file watcher for Dispatch platform
   yarn:
     build: .
-    command: bash -c "cd ../dispatch/dispatch/static/manager && yarn start"
+    command: bash -c "cd ../dispatch/dispatch/static/manager && yarn install && yarn start"
     volumes:
-      - /dispatch
+      # - /dispatch
+       - ./dispatch/dispatch:/dispatch/dispatch
     container_name: ubyssey_yarn
 
 ## Starts up Django server for ubyssey.ca and Dispatch
   django:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "ls ubyssey.ca && cd ubyssey.ca && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
+      - ./dispatch/dispatch:/dispatch/dispatch
       - .:/ubyssey.ca
     volumes_from:
       - gulp

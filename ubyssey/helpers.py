@@ -43,7 +43,7 @@ class ArticleHelper(object):
         paragraph_count = 1
 
         for block in content:
-            paragraph_count = len(filter(lambda b: b['type'] == 'paragraph', content))
+            paragraph_count = len(list(filter(lambda b: b['type'] == 'paragraph', content)))
 
         number_of_ads = 1
         paragraphs_per_ad = 6
