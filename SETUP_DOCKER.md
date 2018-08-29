@@ -8,7 +8,10 @@ https://docs.docker.com/
 
 *If setting up on linux, all docker and docker-compose commands should be preceeded with sudo.*se
 
-cd into the ubyssey.ca directory and run the following command
+cd into the root directory for both your ubyssey.ca and dispatch repos and run the following command
+```bash
+cp -a /ubyssey.ca/docker/. ./
+```
 ```bash
 docker-compose up
 ```

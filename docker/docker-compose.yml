@@ -19,8 +19,6 @@ services:
       retries: 20
     container_name: ubyssey_db
 
-
-
 ## Starts up static file watcher for ubyssey.ca
   gulp:
     build: .

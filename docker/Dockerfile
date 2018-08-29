@@ -9,8 +9,10 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
 RUN nodejs -v && npm -v
 # method for accessing specific branch
-RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 407-python-3
-RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 407-python-3
+# RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 407-python-3
+# RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 407-python-3
+COPY . ./ubyssey.ca
+COPY . ./dispatch
 WORKDIR ./ubyssey.ca/
 RUN pip install -r requirements.txt
 RUN cp _settings/settings-local.py ubyssey/settings.py
@@ -21,7 +23,9 @@ RUN npm rebuild node-sass
 RUN gulp build-dev
 CMD ["gulp"]
 WORKDIR ./../../../
+RUN ls
 WORKDIR ./dispatch/
+RUN ls
 RUN pip install -e .[dev]
 RUN python setup.py develop
 WORKDIR ./dispatch/static/manager
@@ -29,3 +33,4 @@ RUN ls
 RUN npm install -g yarn
 RUN yarn setup
 WORKDIR ./../../../../ubyssey.ca/
+RUN ls
