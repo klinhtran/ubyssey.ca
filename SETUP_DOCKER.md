@@ -10,7 +10,7 @@ https://docs.docker.com/
 
 cd into the root directory for both your ubyssey.ca and dispatch repos and run the following command
 ```bash
-cp -a /ubyssey.ca/docker/. ./
+cp -a ./ubyssey.ca/docker/. ./
 ```
 ```bash
 docker-compose up
