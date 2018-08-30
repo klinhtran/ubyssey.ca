@@ -1,4 +1,4 @@
-# Dockerfile
+# This Dockerfile should be moved to a directory containing both ubyssey.ca and dispatch repos
 # FROM directive instructing base image to build upon
 # This docker image runs on Debian Jessie, a popular linux distro
 FROM python:3.6
