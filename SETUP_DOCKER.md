@@ -7,7 +7,7 @@ Install docker 18.06.x and docker-compose 1.10.x.
 Follow the instructions here. This will require you to create a docker account if you do not already have one.
 https://docs.docker.com/
 
-*If setting up on linux, all docker and docker-compose commands should be preceeded with sudo.*se
+*If setting up on linux, all docker and docker-compose commands should be preceeded with sudo.*
 
 cd into the root directory for both your ubyssey.ca and dispatch repos, this is */ubyssey-dev* if you followed the ubyssey Mac|Windows installation instructions, and run the following command
 
