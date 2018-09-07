@@ -5,9 +5,14 @@ language: python
 env:
   - DOCKER_COMPOSE_VERSION=1.10.0
 
-before_install:
+before_install:  
+  - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
+  - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
   - docker build -t ubyssey-flex .
-  # - docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
+
+
+script:
+  - docker run ubyssey-flex /ubyssey.ca/ubyssey -c "gulp build"
 
 # before_install:
 #   - sudo rm /usr/local/bin/docker-compose
