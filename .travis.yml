@@ -12,7 +12,7 @@ before_install:
 
 
 script:
-  - docker run ubyssey-flex /ubyssey.ca/ubyssey -c "gulp build"
+  - docker run ubyssey-flex /ubyssey.ca/ubyssey/static/ -c "gulp build"
 
 # before_install:
 #   - sudo rm /usr/local/bin/docker-compose
