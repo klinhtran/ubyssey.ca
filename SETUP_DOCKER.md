@@ -12,7 +12,7 @@ https://docs.docker.com/
 cd into the root directory for both your ubyssey.ca and dispatch repos, this is */ubyssey-dev* if you followed the ubyssey Mac|Windows installation instructions, and run the following command
 
 ```bash
-cp -r /ubyssey.ca/docker/. .
+cp -r /ubyssey.ca/local-dev/. .
 ```
 
 Build and run the docker containers. This command can take several minutes, so be patient.

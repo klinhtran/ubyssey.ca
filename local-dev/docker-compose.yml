@@ -32,7 +32,6 @@ services:
     build: .
     command: bash -c "cd ../dispatch/dispatch/static/manager && yarn install && yarn start"
     volumes:
-      # - /dispatch
        - ./dispatch/dispatch:/dispatch/dispatch
     container_name: ubyssey_yarn
 

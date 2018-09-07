@@ -3,7 +3,7 @@ runtime: custom
 env: flex
 
 beta_settings:
-    cloud_sql_instances: ubyssey-prd-flex:us-central1:ubyssey-prd-flex
+    cloud_sql_instances: ubyssey-prd-flex:us-central1:ubyssey-prd-
 
 manual_scaling:
     instances: 1

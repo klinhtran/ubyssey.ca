@@ -1,6 +1,6 @@
 <a class="c-event c-event--box{% if size %} c-event--{{ size}}{% endif %}" href="{% url 'event' event.pk.hex %}">
   {% if event.image and not hide_image %}
-  <div class="c-event__image" style="background-image: url('{{ event.image.url }}')"></div>
+  <div class="c-event__image" style="background-image: url('{{ event.image }}')"></div>
   {% endif %}
   <div class="c-event__meta">
     {% if not hide_datebox %}

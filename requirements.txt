@@ -7,3 +7,5 @@ pyyaml
 ua-parser
 # user-agents
 django-user-agents
+django-google-storage-updated
+gunicorn
