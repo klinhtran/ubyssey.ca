@@ -11,7 +11,7 @@ before_install:
   - docker build -t ubyssey-flex .
   - docker run -d -p 127.0.0.1:80:4567 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
   - docker ps -a
-  - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/ gulp build"
+  - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
 script:
   - gulp build
