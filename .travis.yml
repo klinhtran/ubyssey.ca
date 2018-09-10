@@ -16,6 +16,8 @@ before_install:
 script:
   - gulp build
 
+# line to test travis for dispatch tests
+
 # before_install:
 #   - sudo rm /usr/local/bin/docker-compose
 #   - curl -L https://github.com/docker/compose/releases/download/1.10.0/docker-compose-`uname -s`-`uname -m` > docker-compose
