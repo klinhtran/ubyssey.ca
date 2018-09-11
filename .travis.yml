@@ -9,13 +9,13 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
   - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
   - docker build -t ubyssey-flex .
-  - docker run -d -p 127.0.0.1:80:4567 ubyssey-flex 
-  # - docker run -d -p 127.0.0.1:80:4567 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
+  # - docker run -d -p 127.0.0.1:80:8080 ubyssey-flex 
+  - docker run -d -p 127.0.0.1:80:4567 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
   - docker ps -a
   # - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
-# script:
-  # - gulp build
+script:
+  - gulp build
 
 # line to test travis for dispatch tests
 
