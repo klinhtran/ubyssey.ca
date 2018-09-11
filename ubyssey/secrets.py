@@ -27,7 +27,6 @@ from google.cloud import datastore
 # Instantiates a client
 client = datastore.Client('ubyssey-prd-flex')
 
-
 def get(key):
     query = client.query(kind='Task', key=key)
     print(query)
