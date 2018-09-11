@@ -14,7 +14,7 @@ before_install:
   # - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
 script:
-  - gulp build
+  - cd /root/ubyssey.ca/ubyssey/static/ && gulp build
 
 # line to test travis for dispatch tests
 
