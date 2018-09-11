@@ -18,7 +18,7 @@ VERSION = '1.4.54'
 ALLOWED_HOSTS = [
     'ubyssey.ca',
     'www.ubyssey.ca',
-    'ubyssey-prd.appspot.com',
+    'ubyssey-prd-flex.appspot.com',
 ]
 
 INSTALLED_APPS += [
@@ -74,7 +74,7 @@ CACHES = {
     }
 }
 
-MIDDLEWARE_CLASSES += [
+MIDDLEWARE += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
 ]
 

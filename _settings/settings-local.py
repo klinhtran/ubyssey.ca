@@ -17,7 +17,7 @@ INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 ROOT_URLCONF = 'ubyssey.urls'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     # other middlewares...
     'django_user_agents.middleware.UserAgentMiddleware',
 )
