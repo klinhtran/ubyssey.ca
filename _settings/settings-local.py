@@ -27,6 +27,19 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Vancouver'
 
+# localhost database setup
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ubyssey',
+#         'USER': 'root',
+#         'PASSWORD': 'ubyssey',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     },
+# }
+
+# docker local database setup
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -38,8 +51,9 @@ DATABASES = {
     },
 }
 
+
 TEMPLATES += [
-    {
+ {
         'NAME': 'ubyssey',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
@@ -60,17 +74,11 @@ STATICFILES_DIRS += (
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
 SERVICE_WORKER_URL = '/service-worker.js'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media')
 
-FACEBOOK_CLIENT_ID = ''
-FACEBOOK_CLIENT_SECRET = ''
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'noreply@ubyssey.ca'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_SSL = True
-
-UBYSSEY_ADVERTISING_EMAIL = ''
+# Use in-memory file handler on Google App Engine
+FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.MemoryFileUploadHandler',]
+FILE_UPLOAD_MAX_MEMORY_SIZE = 25621440

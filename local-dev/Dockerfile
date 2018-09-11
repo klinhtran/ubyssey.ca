@@ -26,4 +26,3 @@ WORKDIR ./dispatch/static/manager
 RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
 
-CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
