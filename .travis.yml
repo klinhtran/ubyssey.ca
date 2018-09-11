@@ -48,7 +48,7 @@ deploy:
   #   on:
   #     branch: 407-python-3
   - provider: gae
-    keyfile: ubyssey-prd-flex-37039e07bb9b
+    keyfile: ubyssey-prd-flex-37039e07bb9b.json
     project: ubyssey-prd-flex
     default: true
     version: ubyssey-flex-1 # Replace periods with hyphens
