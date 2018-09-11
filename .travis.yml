@@ -16,37 +16,37 @@ before_install:
 script:
   - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build"
 
-after_success:
-# # clean up node_modules
-# - rm -rf node_modules
-# - cd ${TRAVIS_BUILD_DIR}
-# use deploy settings
-- docker run ubyssey-flex /bin/sh -c "python manage.py collectstatic --noinput"
-- docker cp ubyssey-flex:/gcs ${TRAVIS_BUILD_DIR}/gcs
-# - docker run ubyssey-flex /bin/sh -c "mv _settings/settings-dpl.py ubyssey/settings.py && python manage.py collectstatic --noinput"
-# - python manage.py collectstatic --noinput
-# gzip static files
-- find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
-# replace deploy settings with production settings
-# - rm ubyssey/settings.py ubyssey/settings.pyc
-# - mv _settings/settings-prd.py ubyssey/settings.py
-- rm -rf .git/
+# after_success:
+# # # clean up node_modules
+# # - rm -rf node_modules
+# # - cd ${TRAVIS_BUILD_DIR}
+# # use deploy settings
+# - docker run ubyssey-flex /bin/sh -c "python manage.py collectstatic --noinput"
+# - docker cp ubyssey-flex:/gcs ${TRAVIS_BUILD_DIR}/gcs
+# # - docker run ubyssey-flex /bin/sh -c "mv _settings/settings-dpl.py ubyssey/settings.py && python manage.py collectstatic --noinput"
+# # - python manage.py collectstatic --noinput
+# # gzip static files
+# - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+# # replace deploy settings with production settings
+# # - rm ubyssey/settings.py ubyssey/settings.pyc
+# # - mv _settings/settings-prd.py ubyssey/settings.py
+# - rm -rf .git/
 
 services:
   - docker
 
 deploy:
-  - provider: gcs
-    access_key_id: GOOGIEHS55PVL5M3FUVYGR2Z
-    secret_access_key: RkEjoaROiwRIjP0blYUxKIV1nQlnlgUVzcSOPpJw
-    bucket: ubyssey-prd-flex
-    skip_cleanup: true
-    acl: public-read
-    local-dir: ${TRAVIS_BUILD_DIR}/gcs
-    detect_encoding: true
-    cache_control: "max-age=31536000"
-    on:
-      branch: 407-python-3
+  # - provider: gcs
+  #   access_key_id: GOOGIEHS55PVL5M3FUVYGR2Z
+  #   secret_access_key: RkEjoaROiwRIjP0blYUxKIV1nQlnlgUVzcSOPpJw
+  #   bucket: ubyssey-prd-flex
+  #   skip_cleanup: true
+  #   acl: public-read
+  #   local-dir: ${TRAVIS_BUILD_DIR}/gcs
+  #   detect_encoding: true
+  #   cache_control: "max-age=31536000"
+  #   on:
+  #     branch: 407-python-3
   - provider: gae
     keyfile: client-secret.json
     project: ubyssey-prd-flex
