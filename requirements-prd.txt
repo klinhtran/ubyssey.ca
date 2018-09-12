@@ -2,6 +2,7 @@
 git+git://github.com/ubyssey/django-google-storage.git
 google-cloud-storage
 google-cloud-datastore
+googleapis-common-protos
 django-gae-backends
 django-canonical-domain
 mysqlclient
