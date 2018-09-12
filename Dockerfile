@@ -16,8 +16,7 @@ RUN apt-get update \
 RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 407-python-3
 RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 407-python-3
 WORKDIR ./ubyssey.ca/
-RUN apt-get install libmysqlclient-dev \
-&& pip install -r requirements-prd.txt -t lib/ \
+RUN pip install -r requirements-prd.txt -t lib/ \
 && pip install requests --upgrade -t lib/ \
 && apt-get install -qq libexempi3 \
 && cp _settings/settings-prd.py ubyssey/settings.py
@@ -26,7 +25,7 @@ RUN npm install && npm install -g gulp && npm rebuild node-sass && gulp build
 CMD ["gulp"]
 WORKDIR ./../../../
 WORKDIR ./dispatch/
-RUN pip install .[dev] && python setup.py develop
+RUN pip install -e .[dev] && python setup.py develop
 WORKDIR ./dispatch/static/manager
 RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
