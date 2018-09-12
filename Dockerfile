@@ -16,7 +16,7 @@ RUN apt-get update \
 RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 407-python-3
 RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 407-python-3
 WORKDIR ./ubyssey.ca/
-RUN apt-get install python3-dev default-libmysqlclient-dev \
+RUN apt-get -y install python3-dev default-libmysqlclient-dev \
 && pip install -r requirements-prd.txt -t lib/ \
 && pip install requests --upgrade -t lib/ \
 && apt-get install -qq libexempi3 \
