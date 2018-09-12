@@ -16,7 +16,7 @@ RUN apt-get update \
 RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 407-python-3
 RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 407-python-3
 WORKDIR ./ubyssey.ca/
-RUN pip install -r requirements.txt
+RUN pip install -r requirements-prd.txt
 RUN cp _settings/settings-prd.py ubyssey/settings.py
 WORKDIR ./ubyssey/static
 RUN npm install && npm install -g gulp && npm rebuild node-sass && gulp build
