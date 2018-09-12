@@ -1,5 +1,7 @@
 # dispatch==0.5.9
 git+git://github.com/ubyssey/django-google-storage.git
+google-cloud-storage
+google-cloud-datastore
 django-gae-backends
 django-canonical-domain
 mysqlclient
