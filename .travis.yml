@@ -54,4 +54,4 @@ deploy:
     version: ubyssey-flex-2 # Replace periods with hyphens
     skip_cleanup: true
     on:
-      branch: 530-gae-glex
+      branch: 530-gae-flex
