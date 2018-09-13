@@ -25,7 +25,7 @@ RUN cp requirements-prd.txt requirements.txt \
 WORKDIR ./ubyssey/static
 RUN npm install && npm install -g gulp && npm rebuild node-sass
 WORKDIR ./../../../dispatch/
-RUN pip install -e .[dev] && python setup.py install
+RUN pip install -e . && python setup.py install
 WORKDIR ./dispatch/static/manager
 RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
