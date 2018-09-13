@@ -4,7 +4,7 @@
 FROM gcr.io/google-appengine/python
 LABEL python_version=python3.6
 ENV PYTHONUNBUFFERED 1
-RUN export DEBIAN_FRONTEND=noninteractive
+# RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
 && apt-get -y install python3-dev \ 
 && apt-get -y install default-libmysqlclient-dev \
