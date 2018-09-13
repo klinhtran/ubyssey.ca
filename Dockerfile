@@ -12,7 +12,7 @@ RUN apt-get update \
 && apt-get install -qq libexempi3 \
 && apt-get -y install build-essential curl \
 && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
-&& apt-get install -y nodejs \
+&& apt-get install -y nodejs 
 
 # method for accessing specific branch
 RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 530-gae-flex
