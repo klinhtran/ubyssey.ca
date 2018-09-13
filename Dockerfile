@@ -4,12 +4,10 @@
 FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 RUN export DEBIAN_FRONTEND=noninteractive
-RUN apt-get update \
+RUN python -v && apt-get update \
 && apt-get -y install build-essential curl \
 && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 && apt-get install -y nodejs \
-&& nodejs -v \
-&& npm -v
 
 # method for accessing specific branch
 RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git fetch && git checkout 530-gae-flex
