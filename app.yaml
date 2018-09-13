@@ -1,7 +1,6 @@
 # [START runtime]
 runtime: custom
 env: flex
-entrypoint: gunicorn -b :$PORT ubyssey.wsgi
 
 beta_settings:
     cloud_sql_instances: ubyssey-prd-flex:us-central1:ubyssey-prd-flex
