@@ -19,7 +19,8 @@ RUN git clone https://github.com/ubyssey/ubyssey.ca.git && cd ubyssey.ca && git 
 RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetch && git checkout 530-gae-flex
 WORKDIR ./ubyssey.ca/
 RUN cp _settings/settings-prd.py ubyssey/settings.py \
-&& pip install -r requirements-prd.txt -t lib/ \
+RUN cp -f requirements-prd.txt requirements.txt \
+&& pip install -r requirements.txt -t lib/ \
 && pip install requests --upgrade -t lib/ 
 WORKDIR ./ubyssey/static
 RUN npm install && npm install -g gulp && npm rebuild node-sass
