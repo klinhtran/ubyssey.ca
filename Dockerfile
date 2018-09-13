@@ -1,7 +1,8 @@
 # This Dockerfile should be moved to a directory containing both ubyssey.ca and dispatch repos
 # FROM directive instructing base image to build upon
 # This docker image runs on Debian Jessie, a popular linux distro
-FROM python:3.6
+FROM gcr.io/google-appengine/python
+LABEL python_version=python3.6
 ENV PYTHONUNBUFFERED 1
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
@@ -30,4 +31,4 @@ WORKDIR ./dispatch/static/manager
 RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
 
-CMD exec gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
+CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
