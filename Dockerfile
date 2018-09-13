@@ -31,4 +31,4 @@ RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
 
 # CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
-CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "ubyssey:wsgi"]
+CMD ["gunicorn"  , "-b", "127.0.0.1:8080", "ubyssey:wsgi"]
