@@ -22,7 +22,7 @@ after_success:
 # # - rm -rf node_modules
 # # - cd ${TRAVIS_BUILD_DIR}
 # # use deploy settings
-- docker run ubyssey-flex /bin/sh -c "ls && mysqlclient --version && pip --version && python manage.py collectstatic --noinput"
+- docker run ubyssey-flex /bin/sh -c "ls && && python manage.py collectstatic --noinput"
 # - docker cp ubyssey-flex:/gcs ${TRAVIS_BUILD_DIR}/gcs
 # # - docker run ubyssey-flex /bin/sh -c "mv _settings/settings-dpl.py ubyssey/settings.py && python manage.py collectstatic --noinput"
 # # - python manage.py collectstatic --noinput
