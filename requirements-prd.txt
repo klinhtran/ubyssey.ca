@@ -5,6 +5,7 @@ google-cloud-datastore
 googleapis-common-protos
 django-gae-backends
 django-canonical-domain
+pymysql
 mysqlclient
 django-phonenumber-field
 beautifulsoup4
