@@ -12,7 +12,7 @@ before_install:
   # - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
 script:
-  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build && cd ../../ && python manage.py collectstatic --noinput"
+  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build && cd ../../ && python -v && python manage.py collectstatic --noinput"
 
 after_success:
 # # # clean up node_modules
