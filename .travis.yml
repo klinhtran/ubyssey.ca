@@ -3,9 +3,6 @@ sudo: required
 language: python
 python: '3.6'
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.10.0
-
 before_install:  
   # - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
   # - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
@@ -15,14 +12,15 @@ before_install:
   # - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
 script:
-  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build"
+  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build && cd ../../ && python manage.py collectstatic --noinput"
 
 after_success:
 # # # clean up node_modules
 # # - rm -rf node_modules
 # # - cd ${TRAVIS_BUILD_DIR}
 # # use deploy settings
-- docker run ubyssey-flex /bin/sh -c "ls && && python manage.py collectstatic --noinput"
+# - docker run ubyssey-flex /bin/sh -c "python manage.py migrate"
+# - docker run ubyssey-flex /bin/sh -c "ls && && python manage.py collectstatic --noinput"
 # - docker cp ubyssey-flex:/gcs ${TRAVIS_BUILD_DIR}/gcs
 # # - docker run ubyssey-flex /bin/sh -c "mv _settings/settings-dpl.py ubyssey/settings.py && python manage.py collectstatic --noinput"
 # # - python manage.py collectstatic --noinput
