@@ -1,4 +1,4 @@
-# dispatch==0.5.9
+# dispatch==1.0.0
 mysqlclient
 django-phonenumber-field
 beautifulsoup4
@@ -8,4 +8,4 @@ ua-parser
 # user-agents
 django-user-agents
 django-google-storage-updated
-gunicorn
+gunicorn==19.7.1

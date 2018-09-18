@@ -1,4 +1,4 @@
-# dispatch==0.5.9
+# dispatch==1.0.0
 git+git://github.com/ubyssey/django-google-storage.git
 google-cloud-storage
 google-cloud-datastore
@@ -14,4 +14,4 @@ pyyaml
 ua-parser
 django-user-agents
 django-google-storage-updated
-gunicorn
+gunicorn==19.7.1

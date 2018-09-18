@@ -7,12 +7,12 @@ before_install:
   # - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
   # - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
   - docker build -t ubyssey-flex .
-  - docker run -d -p 127.0.0.1:8080:8080 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
+  - docker run -d -p 127.0.0.1:8000:8000 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
   - docker ps -a
   # - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
 script:
-  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build && cd ../../ && python -v && python manage.py collectstatic --noinput"
+  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build && cd ../../ && mysqlclient -v && python manage.py collectstatic --noinput"
 
 after_success:
 # # # clean up node_modules

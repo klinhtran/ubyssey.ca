@@ -5,6 +5,7 @@ FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
+&& apt-get -y install libssl-dev \
 && apt-get -y install python3-dev \ 
 && apt-get -y install default-libmysqlclient-dev \
 # && pip install -r requirements-prd.txt -t lib/ \
@@ -30,7 +31,8 @@ WORKDIR ./dispatch/static/manager
 RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
 
-EXPOSE 8080
+# EXPOSE 8000
+RUN echo $PORT
 CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
 
-# CMD ["gunicorn", "-b", "127.0.0.1:8080", "ubyssey:wsgi"]
+# CMD ["gunicorn", "-b", "127.0.0.1:8000", "ubyssey:wsgi"]
