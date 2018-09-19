@@ -21,8 +21,8 @@ RUN git clone https://github.com/ubyssey/dispatch.git && cd dispatch && git fetc
 WORKDIR ./ubyssey.ca/
 RUN cp _settings/settings-prd.py ubyssey/settings.py \
 && mv requirements-prd.txt requirements.txt \
-&& pip install -r requirements.txt -t lib/ \
-&& pip install requests --upgrade -t lib/ 
+&& pip install -r requirements.txt \
+&& pip install requests --upgrade 
 WORKDIR ./ubyssey/static
 RUN npm install && npm install -g gulp && npm rebuild node-sass
 WORKDIR ./../../../dispatch/
@@ -32,7 +32,7 @@ RUN npm install -g yarn && yarn setup
 WORKDIR ./../../../../ubyssey.ca/
 
 # EXPOSE 8000
-RUN echo $PORT
+RUN ls
 CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
 
-# CMD ["gunicorn", "-b", "127.0.0.1:8000", "ubyssey:wsgi"]
+# CMD ["gunicorn", "-b", "127.0.0.1:800", "ubyssey:wsgi"]
