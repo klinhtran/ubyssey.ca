@@ -121,10 +121,10 @@ GS_USE_SIGNED_URLS = True
 
 #############################################################
 dirname = os.path.dirname
-STATIC_ROOT = os.path.join(dirname(dirname(__file__)), 'static/gcs')
+STATIC_ROOT = os.path.join(dirname(__file__), 'static/gcs')
 
 STATICFILES_DIRS += (
-    os.path.join(dirname(dirname(__file__)), 'static/dist'),
+    os.path.join(dirname(__file__), 'static/dist'),
 )
 
 # STATIC_URL = '/static/'
