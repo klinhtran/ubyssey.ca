@@ -1,6 +1,6 @@
 import os
 
-# from ubyssey.secrets import Secrets
+from ubyssey.secrets import Secrets
 
 from dispatch.default_settings import *
 
@@ -107,8 +107,8 @@ MEDIA_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/media/'
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 
-GS_ACCESS_KEY_ID = 'GOOGIEHS55PVL5M3FUVYGR2Z'
-GS_SECRET_ACCESS_KEY = 'RkEjoaROiwRIjP0blYUxKIV1nQlnlgUVzcSOPpJw'
+GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
+GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
 GS_STORAGE_BUCKET_NAME = 'ubyssey-prd-flex'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
