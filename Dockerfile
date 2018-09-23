@@ -63,7 +63,8 @@ WORKDIR /ubyssey.ca/ubyssey/static
 RUN npm install \
 && npm install -g gulp \
 && npm rebuild node-sass \
-&& gulp build
+&& gulp build-dev
+CMD ["gulp"]
 
 # make a folder to temporarily hold staticfiles, so travis can copy them for upload to gcs
 RUN mkdir gcs && ls

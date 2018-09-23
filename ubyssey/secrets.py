@@ -31,3 +31,5 @@ def get(key):
     query = client.query(kind='Task', key=key)
     print(query)
     return query
+
+get('GS_ACCESS_KEY_ID')

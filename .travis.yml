@@ -15,12 +15,7 @@ script:
   - docker run ubyssey-flex /bin/sh -c "ls && python manage.py collectstatic --noinput"
 
 after_success:
-  # copy the static files from the docker container to the local travis build dir
-  - docker cp ubyssey-flex:/ubyssey.ca/ubyssey/static/gcs ${TRAVIS_BUILD_DIR}/gcs
-  # remove the staticfiles from the docker container
-  - docker run ubyssey-flex /bin/sh -c "rm -rf /ubyssey.ca/ubyssey/static/gcs"
-  - find ${TRAVIS_BUILD_DIR}/gcs -type f -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
-  # # # clean up node_modules
+# # # clean up node_modules
 # # - rm -rf node_modules
 # # - cd ${TRAVIS_BUILD_DIR}
 # # use deploy settings
@@ -40,17 +35,17 @@ services:
   - docker
 
 deploy:
-  - provider: gcs
-    access_key_id: GOOGIEHS55PVL5M3FUVYGR2Z
-    secret_access_key: RkEjoaROiwRIjP0blYUxKIV1nQlnlgUVzcSOPpJw
-    bucket: ubyssey-prd-flex
-    skip_cleanup: true
-    acl: public-read
-    local-dir: ${TRAVIS_BUILD_DIR}/gcs
-    detect_encoding: true
-    cache_control: "max-age=31536000"
-    on:
-      branch: 530-gae-flex
+  # - provider: gcs
+  #   access_key_id: GOOGIEHS55PVL5M3FUVYGR2Z
+  #   secret_access_key: RkEjoaROiwRIjP0blYUxKIV1nQlnlgUVzcSOPpJw
+  #   bucket: ubyssey-prd-flex
+  #   skip_cleanup: true
+  #   acl: public-read
+  #   local-dir: ${TRAVIS_BUILD_DIR}/gcs
+  #   detect_encoding: true
+  #   cache_control: "max-age=31536000"
+  #   on:
+  #     branch: 530-gae-flex
   - provider: gae
     keyfile: ubyssey-prd-flex-37039e07bb9b.json
     project: ubyssey-prd-flex

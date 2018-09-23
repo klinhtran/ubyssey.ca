@@ -19,6 +19,7 @@ ALLOWED_HOSTS = [
     'ubyssey.ca',
     'www.ubyssey.ca',
     'ubyssey-prd-flex.appspot.com',
+    'www.ubyssey-prd-flex.appspot.com'
 ]
 
 INSTALLED_APPS += [
@@ -99,8 +100,8 @@ MIDDLEWARE += [
 
 ####################### FLEX ###########################
 # STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static/gcs')
-# STATIC_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/static/'
-# MEDIA_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/media/'
+STATIC_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/static/'
+MEDIA_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/media/'
 
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
@@ -119,14 +120,15 @@ GS_USE_SIGNED_URLS = True
 # # GCS_CREDENTIALS_FILE_PATH = "client-secret.json"
 
 #############################################################
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static/gcs')
+dirname = os.path.dirname
+STATIC_ROOT = os.path.join(dirname(dirname(__file__)), 'static/gcs')
 
 STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'static/dist'),
+    os.path.join(dirname(dirname(__file__)), 'static/dist'),
 )
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
 
 
 # STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
