@@ -63,16 +63,16 @@ RUN npm install \
 && npm rebuild node-sass \
 && gulp build
 
-WORKDIR /
+WORKDIR /ubyssey.ca/
 RUN git clone https://github.com/ubyssey/dispatch.git
-WORKDIR /dispatch/
+WORKDIR /ubyssey.ca/dispatch/
 RUN  ls \
 && git fetch \
 && git checkout 530-gae-flex \
 && pip install -e .[dev] \
 && python setup.py develop
 
-WORKDIR /dispatch/dispatch/static/manager
+WORKDIR /ubyssey.ca/dispatch/dispatch/static/manager
 RUN npm install -g yarn \
 && yarn setup
 
