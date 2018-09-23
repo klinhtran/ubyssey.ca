@@ -74,7 +74,10 @@ RUN  ls \
 
 WORKDIR /ubyssey.ca/dispatch/dispatch/static/manager
 RUN npm install -g yarn \
-&& yarn setup
+&& yarn setup \ 
+&& yarn build
 
 WORKDIR /ubyssey.ca/
+# RUN python manage.py collectstatic --noinput
+
 CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
