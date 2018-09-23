@@ -4,8 +4,8 @@ import os
 
 from dispatch.default_settings import *
 
-BASE_URL = 'https://www.ubyssey.ca/'
-CANONICAL_DOMAIN = 'www.ubyssey.ca'
+BASE_URL = 'https://www.ubyssey-prd-flex.appspot.com/'
+CANONICAL_DOMAIN = 'www.ubyssey-prd-flex.appspot.com'
 
 SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
 NOTIFICATION_KEY = "Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E"
@@ -67,12 +67,20 @@ TEMPLATES += [
     }
 ]
 
-SESSION_ENGINE = 'gae_backends.sessions.cached_db'
-CACHES = {
-    'default': {
-        'BACKEND': 'gae_backends.memcache.MemcacheCache',
-    }
-}
+###################### STANDARD ########################
+
+# MEMCACHE IS NOT AVAILABLE ON GAE FLEX ENVIRONMENT
+# We will use default database sessions for now, If caching is necessary
+# look into redis
+
+# SESSION_ENGINE = 'gae_backends.sessions.cached_db'
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'gae_backends.memcache.MemcacheCache',
+#     }
+# }
+
+###################################################
 
 MIDDLEWARE += [
     'canonical_domain.middleware.CanonicalDomainMiddleware',
