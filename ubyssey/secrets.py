@@ -30,11 +30,15 @@ from google.cloud import datastore
 def create_client(project_id):
     return datastore.Client(project_id)
 
-def get(key):
-    query = client.query('Task', key)
-    print(query)
+def get(client, key):
+    query = client.query(kind='secrets')
+    print()
+    print()
+    print(query.fetch(key))
+    print()
+    print(list(query.fetch()))
     return query
 
 client = datastore.Client('ubyssey-prd-flex')
 
-get('GS_ACCESS_KEY_ID')
+get(client, 'GS_ACCESS_KEY_ID')

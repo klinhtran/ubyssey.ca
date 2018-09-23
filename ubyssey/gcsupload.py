@@ -8,7 +8,7 @@ def upload_to_bucket(blob_name='static/test.txt', path_to_file='static/test.txt'
     # Explicitly use service account credentials by specifying the private key
     # file.
     storage_client = storage.Client.from_service_account_json(
-        '../gcs-secret.json')
+        '../ubyssey-prd-flex-secret.json')
 
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(blob_name)

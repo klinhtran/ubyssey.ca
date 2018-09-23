@@ -47,7 +47,7 @@ deploy:
   #   on:
   #     branch: 530-gae-flex
   - provider: gae
-    keyfile: ubyssey-prd-flex-37039e07bb9b.json
+    keyfile: ubyssey-prd-flex-secret.json
     project: ubyssey-prd-flex
     default: true
     version: ubyssey-flex-2 # Replace periods with hyphens
