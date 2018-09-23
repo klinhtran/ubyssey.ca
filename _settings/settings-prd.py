@@ -98,8 +98,9 @@ MIDDLEWARE += [
 # GS_USE_SIGNED_URLS = True
 
 ####################### FLEX ###########################
-STATIC_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/static/'
-MEDIA_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/media/'
+# STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static/gcs')
+# STATIC_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/static/'
+# MEDIA_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/media/'
 
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
@@ -111,20 +112,25 @@ GS_STORAGE_BUCKET_NAME = 'ubyssey-prd-flex'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 
-# DEFAULT_FILE_STORAGE = 'django_gcloud_storage.DjangoGCloudStorage'
+# # DEFAULT_FILE_STORAGE = 'django_gcloud_storage.DjangoGCloudStorage'
 
-# GCS_PROJECT = "ubyssey-prd-flex"
-# GCS_BUCKET = "ubyssey-prd-flex"
-# GCS_CREDENTIALS_FILE_PATH = "client-secret.json"
+# # GCS_PROJECT = "ubyssey-prd-flex"
+# # GCS_BUCKET = "ubyssey-prd-flex"
+# # GCS_CREDENTIALS_FILE_PATH = "client-secret.json"
 
 #############################################################
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static/gcs')
 
 STATICFILES_DIRS += (
     os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
-STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
-MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+
+# STATIC_URL = 'https://ubyssey.storage.googleapis.com/static/'
+# MEDIA_URL = 'https://ubyssey.storage.googleapis.com/media/'
 
 # # Facebook
 # FACEBOOK_CLIENT_ID = Secrets.get('FACEBOOK_CLIENT_ID')

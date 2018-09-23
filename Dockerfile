@@ -43,6 +43,7 @@ FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /
+RUN ls
 RUN export DEBIAN_FRONTEND=noninteractive \
 && apt-get update \
 && apt-get -y install build-essential curl \
@@ -51,6 +52,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 
 RUN git clone https://github.com/ubyssey/ubyssey.ca.git
 WORKDIR /ubyssey.ca/
+
 RUN git fetch \
 && git checkout 530-gae-flex \
 && cp _settings/settings-prd.py ubyssey/settings.py \
@@ -62,6 +64,9 @@ RUN npm install \
 && npm install -g gulp \
 && npm rebuild node-sass \
 && gulp build
+
+# make a folder to temporarily hold staticfiles, so travis can copy them for upload to gcs
+RUN mkdir gcs && ls
 
 WORKDIR /ubyssey.ca/
 RUN git clone https://github.com/ubyssey/dispatch.git
@@ -78,6 +83,6 @@ RUN npm install -g yarn \
 && yarn build
 
 WORKDIR /ubyssey.ca/
-# RUN python manage.py collectstatic --noinput
+# RUN ls && ls ubyssey/ && ls ubyssey/static/ && python manage.py collectstatic --noinput
 
 CMD gunicorn -b :$PORT --pythonpath '/ubyssey' ubyssey.wsgi
