@@ -43,19 +43,18 @@ FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /
+RUN ls
 RUN export DEBIAN_FRONTEND=noninteractive \
 && apt-get update \
 && apt-get -y install build-essential curl \
 && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 && apt-get install -y nodejs
 
-COPY ./ubyssey.ca ./ubyssey.ca
-# RUN git clone https://github.com/ubyssey/ubyssey.ca.git
+RUN git clone https://github.com/ubyssey/ubyssey.ca.git
 WORKDIR /ubyssey.ca/
 
-# RUN git fetch \
-# && git checkout 530-gae-flex \
-RUN ls \
+RUN git fetch \
+&& git checkout 530-gae-flex \
 && cp _settings/settings-prd.py ubyssey/settings.py \
 && mv requirements-prd.txt requirements.txt \
 && pip install -r requirements.txt
