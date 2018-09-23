@@ -119,10 +119,10 @@ GS_USE_SIGNED_URLS = True
 # # GCS_CREDENTIALS_FILE_PATH = "client-secret.json"
 
 #############################################################
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'ubyssey/static/gcs')
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static/gcs')
 
 STATICFILES_DIRS += (
-    os.path.join(os.path.dirname(__file__), 'ubyssey/static/dist'),
+    os.path.join(os.path.dirname(__file__), 'static/dist'),
 )
 
 STATIC_URL = '/static/'
