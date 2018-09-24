@@ -106,9 +106,9 @@ MEDIA_URL = 'https://storage.googleapis.com/ubyssey-prd-flex/media/'
 # GCS File Storage
 DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
-
-GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
-GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
+secret = Secrets()
+GS_ACCESS_KEY_ID = secret.get('GS_ACCESS_KEY_ID')
+GS_SECRET_ACCESS_KEY = secret.get('GS_SECRET_ACCESS_KEY')
 GS_STORAGE_BUCKET_NAME = 'ubyssey-prd-flex'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
