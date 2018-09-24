@@ -4,7 +4,7 @@ class Secrets():
     client = datastore.Client('ubyssey-prd-flex')
 
     @staticmethod
-    def get(client, key):
+    def get(key):
         query = client.query(kind='secrets')
         secrets = list(query.fetch())
         for secret in secrets:
