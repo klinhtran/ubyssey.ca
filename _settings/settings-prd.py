@@ -4,17 +4,20 @@ import ubyssey.secrets as Secrets
 
 from dispatch.default_settings import *
 
+##############################################################
+################### change to ubyssey ########################
+##############################################################
 BASE_URL = 'https://www.ubyssey-prd-flex.appspot.com/'
 CANONICAL_DOMAIN = 'www.ubyssey-prd-flex.appspot.com'
 
-SECRET_KEY = '&t7b#38ncrab5lmpe#pe#41coa-8ctwuy@tm0!x8*n_r38x_m*'
-NOTIFICATION_KEY = "Mp2OSApC5ZQ11iHtKfTfAWycrr-YYl9yphpkeqKIy9E"
-
-# SECRET_KEY = Secrets.get('SECRET_KEY')
-# NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
+SECRET_KEY = Secrets.get('SECRET_KEY')
+NOTIFICATION_KEY = Secrets.get('NOTIFICATION_KEY')
 
 VERSION = '1.4.54'
 
+##############################################################
+################### change to ubyssey ########################
+##############################################################
 ALLOWED_HOSTS = [
     'ubyssey.ca',
     'www.ubyssey.ca',
@@ -108,15 +111,12 @@ DEFAULT_FILE_STORAGE = 'django_google_storage.storage.GoogleStorage'
 
 GS_ACCESS_KEY_ID = Secrets.get('GS_ACCESS_KEY_ID')
 GS_SECRET_ACCESS_KEY = Secrets.get('GS_SECRET_ACCESS_KEY')
+##############################################################
+################### change to ubyssey ########################
+##############################################################
 GS_STORAGE_BUCKET_NAME = 'ubyssey-prd-flex'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
-
-# # DEFAULT_FILE_STORAGE = 'django_gcloud_storage.DjangoGCloudStorage'
-
-# # GCS_PROJECT = "ubyssey-prd-flex"
-# # GCS_BUCKET = "ubyssey-prd-flex"
-# # GCS_CREDENTIALS_FILE_PATH = "client-secret.json"
 
 #############################################################
 dirname = os.path.dirname
