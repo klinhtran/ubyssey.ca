@@ -4,11 +4,12 @@ from google.cloud import storage
 # this function works for uploading single files
 def upload_to_bucket(blob_name='static/test.txt', path_to_file='static/test.txt', bucket_name='ubyssey-prd-flex'):
     """ Upload data to a bucket"""
-
+    abs_path = os.path.dirname(os.path.dirname(__file__))
+    json_keyfile_path = os.path.join(abs_path, 'ubyssey-prd-flex-secret.json')
     # Explicitly use service account credentials by specifying the private key
     # file.
     storage_client = storage.Client.from_service_account_json(
-        '../ubyssey-prd-flex-secret.json')
+        json_keyfile_path)
 
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(blob_name)

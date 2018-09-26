@@ -1,7 +1,9 @@
+import os
 from google.cloud import datastore
 
-# class Secrets():
-client = datastore.Client.from_service_account_json('../ubyssey-prd-flex-secret.json')
+abs_path = os.path.dirname(os.path.dirname(__file__))
+json_keyfile_path = os.path.join(abs_path, 'ubyssey-prd-flex-secret.json')
+client = datastore.Client.from_service_account_json(json_keyfile_path)
 
 def get(key):
     query = client.query(kind='secrets')
