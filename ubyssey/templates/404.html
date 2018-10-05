@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load dispatch_tags %}
 {% block content %}
     {% include 'headers/topbar.html' %}
     {% include 'headers/mobile.html' %}
+    <link rel="stylesheet" href="{% add_version 'css/404.css' %}" type="text/css"/>
     <main class="404">
         <div class="u-container u-container--padded">
             <h1>Where do you think you’re going?</h1>
