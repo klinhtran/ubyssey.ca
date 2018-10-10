@@ -37,17 +37,6 @@ services:
   - docker
 
 deploy:
-  # - provider: gcs
-  #   access_key_id: GOOGIEHS55PVL5M3FUVYGR2Z
-  #   secret_access_key: RkEjoaROiwRIjP0blYUxKIV1nQlnlgUVzcSOPpJw
-  #   bucket: ubyssey-prd-flex
-  #   skip_cleanup: true
-  #   acl: public-read
-  #   local-dir: ${TRAVIS_BUILD_DIR}/gcs
-  #   detect_encoding: true
-  #   cache_control: "max-age=31536000"
-  #   on:
-  #     branch: 407-python-3
   - provider: gae
     keyfile: ubyssey-prd-flex-37039e07bb9b.json
     project: ubyssey-prd-flex

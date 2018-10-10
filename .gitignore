@@ -21,3 +21,4 @@ ubyssey/settings*.py
 
 # Client secret for Travis
 # client-secret.json
+gcs-local.json
