@@ -1,5 +1,5 @@
 import os
-from google.cloud import 
+from google.cloud import datastore
 import settings
 
 # abs_path = os.path.dirname(os.path.dirname(__file__))
