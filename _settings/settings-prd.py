@@ -1,6 +1,6 @@
 import os
 
-import secrets as Secrets
+from secrets import Secrets
 
 from dispatch.default_settings import *
 
