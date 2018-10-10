@@ -39,7 +39,7 @@ deploy:
     keyfile: ubyssey-prd-flex-secret.json
     project: ubyssey-prd-flex
     default: true
-    version: ubyssey-flex-2 # Replace periods with hyphens
+    version: ubyssey-flex-3 # Replace periods with hyphens
     skip_cleanup: true
     on:
       branch: 530-gae-flex
