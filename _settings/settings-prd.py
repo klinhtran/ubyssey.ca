@@ -118,9 +118,13 @@ GS_STORAGE_BUCKET_NAME = 'ubyssey-prd-flex'
 GS_LOCATION = 'media'
 GS_USE_SIGNED_URLS = True
 
+from os.path import dirname
+GCS_CREDENTIALS_FILE = os.path.join(dirname(dirname(__file__)), 'ubyssey-prd-flex-secret.json')
+
 #############################################################
 dirname = os.path.dirname
-STATIC_ROOT = os.path.join(dirname(__file__), 'static/gcs')
+STATIC_COLLECT = 'static/gcs'
+STATIC_ROOT = os.path.join(dirname(__file__), STATIC_COLLECT)
 
 STATICFILES_DIRS += (
     os.path.join(dirname(__file__), 'static/dist'),
