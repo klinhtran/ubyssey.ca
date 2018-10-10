@@ -1,33 +1,14 @@
-# from google.appengine.ext import ndb
-
-# class Secrets(ndb.Model):
-#     key = ndb.StringProperty()
-#     value = ndb.StringProperty()
-
-#     @staticmethod
-#     def get(key):
-#         PLACEHOLDER_VALUE = 'NOT SET'
-
-#         result = Secrets.query(Secrets.key == key).get()
-
-#         if not result:
-#             result = Secrets()
-#             result.key = key
-#             result.value = PLACEHOLDER_VALUE
-#             result.put()
-
-#         if result.value == PLACEHOLDER_VALUE:
-#             raise Exception('Secret %s not defined in the Secrets database.' % key)
-
-#         return result.value
-
-# Imports the Google Cloud client library
+import os
 from google.cloud import datastore
 
-# Instantiates a client
-client = datastore.Client('ubyssey-prd-flex')
+abs_path = os.path.dirname(os.path.dirname(__file__))
+json_keyfile_path = os.path.join(abs_path, 'ubyssey-prd-flex-secret.json')
+client = datastore.Client.from_service_account_json(json_keyfile_path)
 
 def get(key):
-    query = client.query(kind='Task', key=key)
-    print(query)
-    return query
+    query = client.query(kind='secrets')
+    secrets = list(query.fetch())
+    for secret in secrets:
+        if secret['key'] == key:
+            return secret['value']
+    return "FAILED_TO_LOAD_FROM_GCS"

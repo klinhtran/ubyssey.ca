@@ -3,26 +3,24 @@ sudo: required
 language: python
 python: '3.6'
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.10.0
-
 before_install:  
   # - openssl aes-256-cbc -K $encrypted_d55f894abbe8_key -iv $encrypted_d55f894abbe8_iv -in client-secret.json.enc -out client-secret.json -d
   # - export PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}/lib"
   - docker build -t ubyssey-flex .
-  - docker run -d -p 127.0.0.1:8080 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
+  - docker run -d -p 127.0.0.1:8000:8000 ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
   - docker ps -a
   # - docker run ubyssey-flex /bin/sh -c "cd /root/ubyssey.ca/ubyssey/static/; gulp build"
 
 script:
-  - docker run ubyssey-flex /bin/sh -c "ls && cd ./ubyssey/static && gulp build"
+  - docker run ubyssey-flex /bin/sh -c "ls && python manage.py --help && python manage.py collectstatic --noinput"
 
 after_success:
 # # # clean up node_modules
 # # - rm -rf node_modules
 # # - cd ${TRAVIS_BUILD_DIR}
 # # use deploy settings
-- docker run ubyssey-flex /bin/sh -c "ls && && python manage.py collectstatic --noinput"
+- docker run ubyssey-flex /bin/sh -c "ls && cd ubyssey/ && python gcsupload.py"
+# - docker run ubyssey-flex /bin/sh -c "ls && && python manage.py collectstatic --noinput"
 # - docker cp ubyssey-flex:/gcs ${TRAVIS_BUILD_DIR}/gcs
 # # - docker run ubyssey-flex /bin/sh -c "mv _settings/settings-dpl.py ubyssey/settings.py && python manage.py collectstatic --noinput"
 # # - python manage.py collectstatic --noinput
@@ -38,7 +36,7 @@ services:
 
 deploy:
   - provider: gae
-    keyfile: ubyssey-prd-flex-37039e07bb9b.json
+    keyfile: ubyssey-prd-flex-secret.json
     project: ubyssey-prd-flex
     default: true
     version: ubyssey-flex-2 # Replace periods with hyphens

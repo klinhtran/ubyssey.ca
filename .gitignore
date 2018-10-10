@@ -6,6 +6,7 @@ __pycache__/
 # Static file folders
 /media/
 /static/
+/ubyssey/static/gcs/
 /ubyssey/static/dist/
 
 # local GAE
