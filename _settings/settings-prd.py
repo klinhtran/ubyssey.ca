@@ -1,6 +1,6 @@
 import os
 
-import ubyssey.secrets as Secrets
+import secrets as Secrets
 
 from dispatch.default_settings import *
 
