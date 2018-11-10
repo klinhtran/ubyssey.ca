@@ -1,5 +1,6 @@
 import datetime
 from django.utils import timezone
+from django.utils.timezone import get_current_timezone, make_aware
 import pytz
 from random import randint, choice
 
@@ -249,8 +250,7 @@ class ArticleHelper(object):
         articles = Article.objects.filter(is_published=True)
 
         if dur in durations:
-            time_now = timezone.make_aware(timezone.now(), timezone.get_current_timezone(), is_dst=False)
-            end = time_now + datetime.timedelta(days=1)
+            end = timezone.now() + datetime.timedelta(days=1)
             start = end - datetime.timedelta(days=durations[dur])
             time_range = (start, end)
             articles = articles.filter(created_at__range=(time_range))
