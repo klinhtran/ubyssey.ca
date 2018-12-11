@@ -64,6 +64,25 @@ div.indicator {
   }
 }
 
+.hide-full-content {
+  height: 80vh;
+  overflow: hidden;
+  position:relative;
+}
+
+#continue-reading {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* background-color: white; */
+  background-image: linear-gradient(rgba(255, 255, 255, 0), 34%, white, 100%, white);
+  cursor: pointer;
+}
+
 .c-article__tag {
   // Structure
   display: inline-block;
@@ -190,8 +209,6 @@ div.article-content {
     }
   }
 }
-
-
 
 div.caption {
   margin-top: 6px;

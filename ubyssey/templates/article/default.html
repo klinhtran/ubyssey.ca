@@ -13,7 +13,7 @@
   {% include 'objects/advertisement.html' with size='mobile-leaderboard' name='Mobile_Leaderboard' id=2 article=article.id %}
   {% endif %}
   {% endblock %}
-  <article class="c-article c-article--{{ article.template }} js-article" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-author="{{ authors_json }}" data-section="{{ article.section.slug }}" data-url="{{ article.get_absolute_url }}" data-explicit="{{ explicit }}">
+  <article class="c-article c-article--{{ article.template }} hide-full-content js-article" {% if user.is_authenticated %}data-user-id="{{ user.id }}"{% endif %} data-id="{{ article.parent_id }}" data-list="{{ reading_list.ids }}" data-list-name="{{ reading_list.name }}" data-headline="{{ article.headline }}" data-author="{{ authors_json }}" data-section="{{ article.section.slug }}" data-url="{{ article.get_absolute_url }}" data-explicit="{{ explicit }}">
   {% block banner %}
     {% if breaking %}
     <div class="u-container">
@@ -53,28 +53,31 @@
         </div>
         <div class="sidebar offset">
         {% else %}
-        <div class="sidebar">
-        {% endif %}
-          {% zone 'article-sidebar' %}
-          {% if explicit is not True %}
-            {% if reading_time >= 3 %}
-              {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
-              {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
-            {% else %}
-              {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
-            {% endif %}
-          {% else %}
-            {% include 'objects/replacement.html' with size='box' %}
+          <div class="sidebar">
           {% endif %}
+            {% zone 'article-sidebar' %}
+            {% if explicit is not True %}
+              {% if reading_time >= 3 %}
+                {% include 'objects/advertisement.html' with size='skyscraper' name='Box_A' id=3 article=article.id %}
+                {% include 'objects/advertisement.html' with size='box' name='Box_B' id=4 article=article.id %}
+              {% else %}
+                {% include 'objects/advertisement.html' with size='box' name='Box_A' id=3 article=article.id %}
+              {% endif %}
+            {% else %}
+              {% include 'objects/replacement.html' with size='box' %}
+            {% endif %}
+          </div>
         </div>
-      </div>
-      {% endblock %}
-      <div class="article-content">
-      {% block pre-content %}{% endblock %}
-        {{ article.html|safe }}
-      </div>
-
+        {% endblock %}
+        <div class="article-content">
+        {% block pre-content %}{% endblock %}
+          {{ article.html|safe }}
+        </div>
       {% include 'objects/social-icons-bottom.html' with article=article %}
+    </div>
+    <div id="continue-reading">
+      Continue Reading
+    </div>
   </article>
 </main>
 

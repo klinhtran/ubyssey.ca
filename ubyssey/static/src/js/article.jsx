@@ -184,6 +184,15 @@ if ($('main.article').length) {
 
     articleAds()
 
+    function continueReading() {
+        $('#continue-reading').click(function() {
+            $('.c-article').removeClass('hide-full-content')
+            $(this).hide()
+        })
+    }
+
+    continueReading()
+
     var articleList = React.render(
         <ArticlesSuggested
           breakpoint={960}
